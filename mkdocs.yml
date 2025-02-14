@@ -1,0 +1,6 @@
+site_name: "ARCN - Hands on Labs"
+theme:
+  name: "material"
+nav:
+  - Home: index.md
+  - Guía: guia.md
