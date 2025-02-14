@@ -19,16 +19,73 @@ Este laboratorio tiene como objetivo que los estudiantes refactoricen código qu
    - Inicializa el repositorio con un archivo `README.md`.
    - Haz clic en "Create repository".
 
+## Creación del Proyecto Maven
+
+Para desarrollar el laboratorio, primero debemos crear un proyecto Maven. En GitHub Codespaces, ejecuta el siguiente comando en la terminal:
+
+```sh
+mvn archetype:generate -DgroupId=com.example.solid -DartifactId=solid-principles-java-lab -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+```
+
+Este comando generará la estructura básica del proyecto con las carpetas `src/main/java` y `src/test/java`.
+
+Luego, navega al directorio del proyecto:
+
+```sh
+cd solid-principles-java-lab
+```
+
+Ahora puedes continuar con la configuración del entorno.
+
+## Configuración del POM.xml
+
+Para asegurar la compatibilidad con Java 17, actualiza el archivo `pom.xml` con la siguiente configuración:
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example.solid</groupId>
+    <artifactId>solid-principles-java-lab</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.7.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.7.1</version>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+Ahora puedes continuar con la configuración del entorno.
+
 ## Configuración en GitHub Codespaces
 
 Para desarrollar el laboratorio en GitHub Codespaces, sigue estos pasos:
 
 1. **Habilitar Codespaces en el repositorio:**
+
    - Ve a tu repositorio en GitHub.
    - Haz clic en el botón "Code" y selecciona "Codespaces".
    - Crea un nuevo Codespace.
 
 2. **Configurar el entorno de desarrollo:**
+
    - Asegúrate de que `Java 17` y `Maven` estén instalados.
    - Puedes definir un archivo `.devcontainer/devcontainer.json` para personalizar el entorno:
 
@@ -40,7 +97,7 @@ Para desarrollar el laboratorio en GitHub Codespaces, sigue estos pasos:
       "version": "17"
     }
   },
-  "postCreateCommand": "mvn clean install"
+  "postCreateCommand": "sudo apt update && sudo apt install -y maven && mvn clean install"
 }
 ```
 
@@ -207,4 +264,9 @@ class OrderProcessor {
 
 ### ¿Cómo entregar las soluciones?
 
-Cada estudiante debe crear una versión refactorizada en `GoodExample.java` dentro de cada carpeta (`srp/`, `ocp/`, etc.), aplicando SOLID correctamente.
+1. Cada estudiante/grupo debe crear una versión refactorizada en `GoodExample.java` dentro de cada carpeta (`srp/`, `ocp/`, etc.), aplicando SOLID correctamente.
+2. Se debe realizar UT en cada caso y/o principio.
+3. Generar un Readme en el que se indique nombres de los integrantes del grupo y patrones de diseño que se pueden implementar en los retos.
+4. Se debe contemplar el trabajo colaborativo (Todos deben tener un cambio con su usuario en el repositorio).
+5. Se debe establecer una estrategia para exponer el ejercicio en el que cada integrante participe. 
+
