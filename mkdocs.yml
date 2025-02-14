@@ -3,4 +3,4 @@ theme:
   name: "material"
 nav:
   - Home: index.md
-  - Guía: guia.md
+  - SOLID: solid.md
