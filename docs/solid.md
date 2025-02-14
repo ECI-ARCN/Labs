@@ -3,12 +3,24 @@
 Este laboratorio tiene como objetivo que los estudiantes refactoricen código que viola los principios SOLID y apliquen las mejores prácticas.
 
 ## Requisitos Previos
+
 - Java 17+
 - Maven
 - GitHub Codespaces
 - JUnit 5 para pruebas
 
+## Creación del Repositorio en GitHub
+
+1. **Crear un nuevo repositorio:**
+   - Ve a [GitHub](https://github.com/).
+   - Haz clic en el botón "New repository".
+   - Asigna un nombre, por ejemplo, `solid-principles-java-lab`.
+   - Selecciona "Public" o "Private" según prefieras.
+   - Inicializa el repositorio con un archivo `README.md`.
+   - Haz clic en "Create repository".
+
 ## Configuración en GitHub Codespaces
+
 Para desarrollar el laboratorio en GitHub Codespaces, sigue estos pasos:
 
 1. **Habilitar Codespaces en el repositorio:**
@@ -32,20 +44,14 @@ Para desarrollar el laboratorio en GitHub Codespaces, sigue estos pasos:
 }
 ```
 
-3. **Clonar y abrir el proyecto:**
-   - En la terminal de Codespaces, ejecuta:
-     ```sh
-     git clone https://github.com/tu-usuario/solid-principles-java-lab.git
-     cd solid-principles-java-lab
-     ```
-
-4. **Compilar y ejecutar pruebas:**
+3. **Compilar y ejecutar pruebas:**
    - Usa el siguiente comando para compilar el código y ejecutar pruebas:
      ```sh
      mvn test
      ```
 
 ## Estructura del Proyecto
+
 ```
 solid-principles-java-lab/
 ├── src/
@@ -63,6 +69,7 @@ solid-principles-java-lab/
 ## Ejercicios
 
 ### 1. Single Responsibility Principle (SRP)
+
 **Problema:** La clase `Invoice` tiene múltiples responsabilidades.
 
 ```java
@@ -89,10 +96,13 @@ public class Invoice {
     }
 }
 ```
+
 **Tarea:** Refactoriza separando la lógica en diferentes clases.
 
 ---
+
 ### 2. Open/Closed Principle (OCP)
+
 **Problema:** La clase `DiscountCalculator` no es extensible sin modificar su código.
 
 ```java
@@ -107,10 +117,13 @@ public class DiscountCalculator {
     }
 }
 ```
+
 **Tarea:** Aplica OCP creando una interfaz `DiscountStrategy`.
 
 ---
+
 ### 3. Liskov Substitution Principle (LSP)
+
 **Problema:** `ElectricCar` no puede usar `refuel()`.
 
 ```java
@@ -131,10 +144,13 @@ class ElectricCar extends Car {
     }
 }
 ```
+
 **Tarea:** Separa los métodos en interfaces específicas.
 
 ---
+
 ### 4. Interface Segregation Principle (ISP)
+
 **Problema:** La interfaz `Worker` obliga a los desarrolladores a implementar métodos innecesarios.
 
 ```java
@@ -155,10 +171,13 @@ class Developer implements Worker {
     }
 }
 ```
+
 **Tarea:** Divide la interfaz en `Workable` y `Eatable`.
 
 ---
+
 ### 5. Dependency Inversion Principle (DIP)
+
 **Problema:** `OrderProcessor` depende directamente de `MySQLDatabase`.
 
 ```java
@@ -181,8 +200,11 @@ class OrderProcessor {
     }
 }
 ```
+
 **Tarea:** Crea una interfaz `Database` e inyecta una implementación concreta.
 
 ---
+
 ### ¿Cómo entregar las soluciones?
+
 Cada estudiante debe crear una versión refactorizada en `GoodExample.java` dentro de cada carpeta (`srp/`, `ocp/`, etc.), aplicando SOLID correctamente.

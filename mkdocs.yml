@@ -1,4 +1,5 @@
 site_name: "ARCN - Hands on Labs"
+site_author: "Iván Sanchez"
 theme:
   name: "material"
 nav:
