@@ -8,6 +8,43 @@ Este laboratorio tiene como objetivo que los estudiantes refactoricen código qu
 - GitHub Codespaces
 - JUnit 5 para pruebas
 
+## Configuración en GitHub Codespaces
+Para desarrollar el laboratorio en GitHub Codespaces, sigue estos pasos:
+
+1. **Habilitar Codespaces en el repositorio:**
+   - Ve a tu repositorio en GitHub.
+   - Haz clic en el botón "Code" y selecciona "Codespaces".
+   - Crea un nuevo Codespace.
+
+2. **Configurar el entorno de desarrollo:**
+   - Asegúrate de que `Java 17` y `Maven` estén instalados.
+   - Puedes definir un archivo `.devcontainer/devcontainer.json` para personalizar el entorno:
+
+```json
+{
+  "image": "mcr.microsoft.com/devcontainers/java:17",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17"
+    }
+  },
+  "postCreateCommand": "mvn clean install"
+}
+```
+
+3. **Clonar y abrir el proyecto:**
+   - En la terminal de Codespaces, ejecuta:
+     ```sh
+     git clone https://github.com/tu-usuario/solid-principles-java-lab.git
+     cd solid-principles-java-lab
+     ```
+
+4. **Compilar y ejecutar pruebas:**
+   - Usa el siguiente comando para compilar el código y ejecutar pruebas:
+     ```sh
+     mvn test
+     ```
+
 ## Estructura del Proyecto
 ```
 solid-principles-java-lab/
