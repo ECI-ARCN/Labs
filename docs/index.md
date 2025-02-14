@@ -1,3 +1,3 @@
 # Hands On Labs ECI - ARCN
 
-Pagina en la que se alojaran lon laboratorios correspondientes al modulo de ARC, de la maestria en informatica de la Escuela Colombiana de Ingeniería.
+Página en la que se alojaran los laboratorios correspondientes al módulo de ARCN, de la maestría en informática de la Escuela Colombiana de Ingeniería.
