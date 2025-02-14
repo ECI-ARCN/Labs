@@ -2,10 +2,7 @@ site_name: "ARCN - Hands on Labs"
 site_author: "Iván Sanchez"
 theme:
   name: "material"
-extra_css:
-  - assets/quiz_xp.html
 nav:
   - Home: index.md
   - SOLID: solid.md
   - TDD: tdd.md
-  - Quiz XP: quizXP.md
