@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz XP</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: var(--md-default-bg-color); color: var(--md-default-fg-color); }
+        .quiz-container { width: 80%; margin: auto; text-align: left; }
+        .question { margin: 20px 0; }
+        .result { font-weight: bold; margin-top: 20px; }
+        button { background: var(--md-accent-fg-color); color: white; border: none; padding: 10px; cursor: pointer; }
+        button:hover { background: var(--md-accent-fg-color--light); }
+    </style>
+</head>
+<body>
+    <h1>Quiz sobre eXtreme Programming (XP)</h1>
+    <div class="quiz-container" id="quiz">
+        <!-- Preguntas aquí -->
+    </div>
+    <button onclick="calcularResultado()">Enviar respuestas</button>
+    <p class="result" id="resultado"></p>
+
+    <script>
+        const preguntas = [
+            { pregunta: "¿Cuál es uno de los valores fundamentales de XP?", opciones: ["Competitividad", "Simplicidad", "Jerarquía", "Planificación estricta"], respuesta: 1 },
+            { pregunta: "¿Qué práctica de XP fomenta la escritura de pruebas antes del código?", opciones: ["Refactorización", "Programación en parejas", "Desarrollo guiado por pruebas (TDD)", "Entregas frecuentes"], respuesta: 2 },
+            { pregunta: "¿Cuál es el propósito de la integración continua en XP?", opciones: ["Minimizar los errores y conflictos en el código", "Asegurar que solo se liberen versiones finales", "Evitar la colaboración entre desarrolladores", "Retrasar la detección de errores"], respuesta: 0 },
+            { pregunta: "¿Cuál de estas prácticas es clave en XP?", opciones: ["Codificación en solitario", "Diseño anticipado y detallado", "Refactorización constante", "Documentación extensa antes de escribir código"], respuesta: 2 },
+            { pregunta: "¿Cómo se manejan los cambios de requisitos en XP?", opciones: ["Se evitan a toda costa", "Se aceptan y se incorporan de forma iterativa", "Se congelan después de la primera iteración", "Se permiten solo después de la fase de pruebas"], respuesta: 1 },
+            { pregunta: "¿Qué rol tiene el cliente en XP?", opciones: ["No participa en el desarrollo", "Define los requisitos al inicio y luego espera el producto final", "Es parte activa del equipo y ayuda a priorizar el trabajo", "Solo revisa el software al final del proyecto"], respuesta: 2 },
+            { pregunta: "¿Qué significa el principio de 'You Ain't Gonna Need It' (YAGNI) en XP?", opciones: ["No agregar funcionalidades innecesarias antes de que sean requeridas", "Desarrollar todas las posibles funcionalidades desde el inicio", "Crear código complejo para futuras necesidades", "Invertir tiempo en documentación extensa antes de escribir código"], respuesta: 0 },
+            { pregunta: "¿Cuál de las siguientes afirmaciones es cierta sobre la programación en parejas en XP?", opciones: ["Un desarrollador programa mientras el otro observa y sugiere mejoras", "Solo se usa en casos críticos", "Es una práctica opcional", "Reduce la calidad del código"], respuesta: 0 },
+            { pregunta: "¿Cuál es el objetivo de las entregas frecuentes en XP?", opciones: ["Evitar el feedback del cliente", "Asegurar un lanzamiento grande al final", "Obtener retroalimentación rápida y hacer ajustes constantes", "Reducir la comunicación con los clientes"], respuesta: 2 },
+            { pregunta: "¿Qué se busca con la refactorización en XP?", opciones: ["Agregar nuevas funcionalidades sin probar", "Hacer que el código sea más mantenible y comprensible", "Evitar cambios en el código", "Asegurar que el código solo funcione sin importar su estructura"], respuesta: 1 }
+        ];
+
+        const quizContainer = document.getElementById("quiz");
+
+        preguntas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.classList.add("question");
+            div.innerHTML = `<p>${index + 1}. ${q.pregunta}</p>` +
+                q.opciones.map((op, i) => `<label><input type="radio" name="q${index}" value="${i}"> ${op}</label><br>`).join("");
+            quizContainer.appendChild(div);
+        });
+
+        function calcularResultado() {
+            let score = 0;
+            preguntas.forEach((q, index) => {
+                const seleccionada = document.querySelector(`input[name="q${index}"]:checked`);
+                if (seleccionada && parseInt(seleccionada.value) === q.respuesta) {
+                    score++;
+                }
+            });
+            document.getElementById("resultado").innerText = `Tu puntuación es: ${score} de ${preguntas.length}`;
+        }
+    </script>
+</body>
+</html>

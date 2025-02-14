@@ -6,3 +6,5 @@ nav:
   - Home: index.md
   - SOLID: solid.md
   - TDD: tdd.md
+extra_css:
+  - assets/quiz_xp.html
