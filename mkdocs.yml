@@ -6,3 +6,4 @@ nav:
   - Home: index.md
   - SOLID: solid.md
   - TDD: tdd.md
+  - BDD Parte 1: bdd-part1.md
