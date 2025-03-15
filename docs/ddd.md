@@ -18,12 +18,12 @@ Los eventos representan cosas que suceden en el sistema y se escriben en **pasad
         box-shadow: 2px 2px 5px gray;
     }
     .evento { background-color: #ffa500; color: black; }
-    .actor { background-color: #fdfd96; color: black; }
+    .agregado { background-color: #fdfd96; color: black; }
     .comando { background-color: #87ceeb; color: black; }
-    .agregado { background-color: #ffeb3b; color: black; }
-    .politica { background-color: #9b59b6; color: black; }
+    .actor { background-color: #ffeb3b; color: black; }
+    .politica { background-color: #9b59b6; color: white; }
     .problema { background-color: #ffcccb; color: black; }
-    .bounded-context { background-color: #8e44ad; color: white; }
+    .bounded-context { background-color:rgb(8, 214, 245); color: black; }
     table { border-collapse: collapse; }
     td { padding: 10px; border: none; }
 </style>
@@ -105,42 +105,16 @@ Basándonos en los eventos, podemos identificar **bounded contexts** dentro de l
 ## **7. Conclusión**
 Este Event Storming nos permite visualizar el flujo de eventos y mejorar la colaboración entre equipos técnicos y de negocio, asegurando una mejor comprensión del dominio de la tienda en línea.
 
----
-
-## **8. Blueprint General del Ejercicio Completo**
-
-### **Flujo de Eventos y Componentes**
-
-1. **Cliente**: Agrega productos al carrito, crea el pedido, y confirma la entrega.
-2. **Sistema de Pagos**: Procesa el pago.
-3. **Sistema de Envíos**: Envía el pedido.
-
-### **Eventos**
-- Producto Agregado al Carrito
-- Pedido Creado
-- Pago Procesado
-- Pedido Enviado
-- Pedido Entregado
-
-### **Actores y Comandos**
-- **Cliente**: Agregar Producto al Carrito, Crear Pedido, Confirmar Entrega
-- **Sistema de Pagos**: Procesar Pago
-- **Sistema de Envíos**: Enviar Pedido
-
-### **Agregados y Políticas**
-- **Carrito de Compras**: Verificar Stock Antes de Confirmar Pedido
-- **Pedido**: Validar Método de Pago Antes de Procesarlo, Notificar al Cliente sobre el Estado del Pedido
-
-### **Problemas Identificados**
-- ¿Qué sucede si el pago es rechazado?
-- ¿Cómo manejamos productos sin stock?
-- ¿Cómo gestionamos devoluciones?
-
-### **Bounded Contexts**
-- Carrito de Compras
-- Procesamiento de Pedidos
-- Envíos
-
----
 
 🚀 **¡Ahora estás listo para aplicar Event Storming en tus proyectos!**
+
+
+# **Taller caso de negocio**
+Reunete con tu grupo y plantea el event storming en el tablero de la clase [ARCN - 2025-1](https://miro.com/welcomeonboard/NkhoVStiYUxGeEwxcU5Qd09uRnBjVEF1SlJ1MnU3VnYraVVOanRLSXVzQnFoYjNyQnF2SFFZK1hYT0pJeXdjZXpJSGMvcjJEVG92dEpFNGF5Wko5SWgyTWliTGVRUmtURmh4ekc1R0RJNjhab0p0cktEQ2kwTHlhYzJFeUN2OGV0R2lncW1vRmFBVnlLcVJzTmdFdlNRPT0hdjE=?share_link_id=967622799927), con el caso de negocio (Dominio) seleccionado y realiza las siguientes actividades:
+
+1. Ejecuta el ciclo propuesto en [ddd-practitioners](https://ddd-practitioners.com/2023/03/20/remote-eventstorming-workshop/)
+2. Importante manejar colores en lo posible estándares del event storming.
+3. Investigar como agregar lenguaje ubicuo.
+4. Mostrar cómo se hace el ejercicio fase a fase y al final entregar un blue print del modelo de dominio completo.
+5. En qué fase del proyecto se debería ejecutar este workshop y quienes consideran que deberían participar?
+6. Proponer como realizarían este evento si su rol es el de coach facilitador.
