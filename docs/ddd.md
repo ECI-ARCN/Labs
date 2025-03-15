@@ -1,9 +1,11 @@
+
 # **Taller de Event Storming: Ejemplo - Tienda en Línea**
 
 ## **1. Introducción**
 Event Storming es una técnica de modelado colaborativo para entender y diseñar sistemas a partir de eventos del dominio. En este ejemplo, modelaremos una **tienda en línea** desde la selección de productos hasta la entrega del pedido.
 
 ---
+
 ## **2. Eventos del Dominio**
 Los eventos representan cosas que suceden en el sistema y se escriben en **pasado**.
 
@@ -16,11 +18,12 @@ Los eventos representan cosas que suceden en el sistema y se escriben en **pasad
         box-shadow: 2px 2px 5px gray;
     }
     .evento { background-color: #ffa500; color: black; }
-    .actor { background-color: #fffb96; color: black; }
+    .actor { background-color: #fdfd96; color: black; }
     .comando { background-color: #87ceeb; color: black; }
-    .agregado { background-color: #fdfd96; color: black; }
-    .politica { background-color: #d3d3d3; color: black; }
+    .agregado { background-color: #ffeb3b; color: black; }
+    .politica { background-color: #9b59b6; color: black; }
     .problema { background-color: #ffcccb; color: black; }
+    .bounded-context { background-color: #8e44ad; color: white; }
     table { border-collapse: collapse; }
     td { padding: 10px; border: none; }
 </style>
@@ -32,6 +35,7 @@ Los eventos representan cosas que suceden en el sistema y se escriben en **pasad
 <div class="postit evento">Pedido Entregado</div>
 
 ---
+
 ## **3. Actores y Comandos**
 Los actores son quienes interactúan con el sistema y los comandos representan acciones que desencadenan eventos.
 
@@ -59,6 +63,7 @@ Los actores son quienes interactúan con el sistema y los comandos representan a
 </table>
 
 ---
+
 ## **4. Agregados y Políticas**
 Los agregados representan unidades lógicas del sistema, mientras que las políticas definen reglas de negocio.
 
@@ -78,6 +83,7 @@ Los agregados representan unidades lógicas del sistema, mientras que las polít
 </table>
 
 ---
+
 ## **5. Problemas Identificados**
 Durante el taller, pueden surgir dudas o problemas que necesitan ser resueltos.
 
@@ -86,15 +92,55 @@ Durante el taller, pueden surgir dudas o problemas que necesitan ser resueltos.
 <div class="postit problema">¿Cómo gestionamos devoluciones?</div>
 
 ---
+
 ## **6. Refinamiento y Modelado del Dominio**
 Basándonos en los eventos, podemos identificar **bounded contexts** dentro de la arquitectura del sistema.
 
-<div class="postit agregado">Carrito de Compras</div>
-<div class="postit agregado">Procesamiento de Pedidos</div>
-<div class="postit agregado">Envíos</div>
+<div class="postit bounded-context">Carrito de Compras</div>
+<div class="postit bounded-context">Procesamiento de Pedidos</div>
+<div class="postit bounded-context">Envíos</div>
 
 ---
+
 ## **7. Conclusión**
 Este Event Storming nos permite visualizar el flujo de eventos y mejorar la colaboración entre equipos técnicos y de negocio, asegurando una mejor comprensión del dominio de la tienda en línea.
+
+---
+
+## **8. Blueprint General del Ejercicio Completo**
+
+### **Flujo de Eventos y Componentes**
+
+1. **Cliente**: Agrega productos al carrito, crea el pedido, y confirma la entrega.
+2. **Sistema de Pagos**: Procesa el pago.
+3. **Sistema de Envíos**: Envía el pedido.
+
+### **Eventos**
+- Producto Agregado al Carrito
+- Pedido Creado
+- Pago Procesado
+- Pedido Enviado
+- Pedido Entregado
+
+### **Actores y Comandos**
+- **Cliente**: Agregar Producto al Carrito, Crear Pedido, Confirmar Entrega
+- **Sistema de Pagos**: Procesar Pago
+- **Sistema de Envíos**: Enviar Pedido
+
+### **Agregados y Políticas**
+- **Carrito de Compras**: Verificar Stock Antes de Confirmar Pedido
+- **Pedido**: Validar Método de Pago Antes de Procesarlo, Notificar al Cliente sobre el Estado del Pedido
+
+### **Problemas Identificados**
+- ¿Qué sucede si el pago es rechazado?
+- ¿Cómo manejamos productos sin stock?
+- ¿Cómo gestionamos devoluciones?
+
+### **Bounded Contexts**
+- Carrito de Compras
+- Procesamiento de Pedidos
+- Envíos
+
+---
 
 🚀 **¡Ahora estás listo para aplicar Event Storming en tus proyectos!**
