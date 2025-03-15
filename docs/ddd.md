@@ -103,13 +103,13 @@ Basándonos en los eventos, podemos identificar **bounded contexts** dentro de l
 ---
 
 ## **7. Conclusión**
-Este Event Storming nos permite visualizar el flujo de eventos y mejorar la colaboración entre equipos técnicos y de negocio, asegurando una mejor comprensión del dominio de la tienda en línea.
+Este Event Storming nos permite visualizar el flujo de eventos y mejorar la colaboración entre equipos técnicos y de negocio, asegurando una mejor comprensión del dominio.
 
 
 🚀 **¡Ahora estás listo para aplicar Event Storming en tus proyectos!**
 
 
-# **Taller caso de negocio**
+## **Taller caso de negocio**
 Reunete con tu grupo y plantea el event storming en el tablero de la clase [ARCN - 2025-1](https://miro.com/welcomeonboard/NkhoVStiYUxGeEwxcU5Qd09uRnBjVEF1SlJ1MnU3VnYraVVOanRLSXVzQnFoYjNyQnF2SFFZK1hYT0pJeXdjZXpJSGMvcjJEVG92dEpFNGF5Wko5SWgyTWliTGVRUmtURmh4ekc1R0RJNjhab0p0cktEQ2kwTHlhYzJFeUN2OGV0R2lncW1vRmFBVnlLcVJzTmdFdlNRPT0hdjE=?share_link_id=967622799927), con el caso de negocio (Dominio) seleccionado y realiza las siguientes actividades:
 
 1. Ejecuta el ciclo propuesto en [ddd-practitioners](https://ddd-practitioners.com/2023/03/20/remote-eventstorming-workshop/)
