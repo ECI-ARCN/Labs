@@ -114,7 +114,7 @@ Reunete con tu grupo y plantea el event storming en el tablero de la clase [ARCN
 
 1. Ejecuta el ciclo propuesto en [ddd-practitioners](https://ddd-practitioners.com/2023/03/20/remote-eventstorming-workshop/)
 2. Importante manejar colores en lo posible estándares del event storming.
-3. Investigar como agregar lenguaje ubicuo.
+3. Agregar lenguaje ubicuo y modelo de datos.
 4. Mostrar cómo se hace el ejercicio fase a fase y al final entregar un blue print del modelo de dominio completo.
 5. En qué fase del proyecto se debería ejecutar este workshop y quienes consideran que deberían participar?
 6. Proponer como realizarían este evento si su rol es el de coach facilitador.
