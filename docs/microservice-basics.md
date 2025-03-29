@@ -102,15 +102,15 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
 3. **Ejecutar la Aplicación:**
     * Utiliza el terminal integrado en Codespaces para ejecutar tu aplicación con el comando:
     
-```bash
-    mvn spring-boot:run
-```
+    ```bash
+        mvn spring-boot:run
+    ```
 
-* Verifica que la aplicación se ejecute correctamente y esté accesible ejecutando
+    * Verifica que la aplicación se ejecute correctamente y esté accesible ejecutando
     
-```bash
-    curl http://localhost:8080/hello
-```
+    ```bash
+        curl http://localhost:8080/hello
+    ```
 
 ## Paso 5: Crear y Subir la Imagen Docker
 
@@ -137,29 +137,29 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
     * Asegurate de tener/crear cuenta en [Docker Hub](https://hub.docker.com/)
     * Etiqueta la imagen con tu nombre de usuario de Docker Hub:
     
-```bash
-    docker tag microservice-helloworld <tu-usuario>/microservice-helloworld
-```
+    ```bash
+        docker tag microservice-helloworld <tu-usuario>/microservice-helloworld
+    ```
 
     * Inicia sesión en Docker Hub:
         - Github codespace, genera un login del space a Docker Hub, por tanto debes desloguear primero
         
-```bash
-    docker logout
-```
+    ```bash
+        docker logout
+    ```
 
     * Una vez deslogueado, loguearse con el usuario de Docker Hub
         
-```bash
-    docker login -u <tu-usuario>
-```
+    ```bash
+        docker login -u <tu-usuario>
+    ```
 
     * Te pedira un password, para el cual debes generar un "Personal Access Token" en Docker Hub
     * Sube la imagen a Docker Hub:
      
-```bash
-    docker push <tu-usuario>/microservice-helloworld
-```
+    ```bash
+        docker push <tu-usuario>/microservice-helloworld
+    ```
 
 ## Paso 6: Ejecutar el Servicio en Play with Docker
 
@@ -172,8 +172,8 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
 3. **Ejecutar el Contenedor:**
     * En Play with Docker, ejecuta el contenedor con el siguiente comando:
     
-```bash
-    docker run -p 8080:8080 <tu-usuario>/microservice-helloworld
-```
+    ```bash
+        docker run -p 8080:8080 <tu-usuario>/microservice-helloworld
+    ```
 
     * Accede al servicio desde el enlace proporcionado por Play with Docker, añadiendo `/hello` al final de la URL para ver el mensaje "Hello, World!".
