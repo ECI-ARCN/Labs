@@ -7,10 +7,10 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
 ## Paso 1: Configuración del Repositorio en GitHub
 
 1. **Crear un Repositorio en GitHub:**
-   - Ve a [GitHub](https://github.com) y accede a tu cuenta.
-   - Haz clic en "New" para crear un nuevo repositorio.
-   - Asigna un nombre al repositorio, por ejemplo, `hello-world-microservice`.
-   - Inicializa el repositorio con un archivo README.
+    * Ve a [GitHub](https://github.com) y accede a tu cuenta.
+    * Haz clic en "New" para crear un nuevo repositorio.
+    * Asigna un nombre al repositorio, por ejemplo, `hello-world-microservice`.
+    * Inicializa el repositorio con un archivo README.
 
 ## Paso 2: Configuración de GitHub Codespaces
 
