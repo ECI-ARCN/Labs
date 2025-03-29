@@ -22,7 +22,7 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
     * Crear archivo con el nombre ".devcontainer/devcontainer.json"
     * Pegar la siguiente configuración
 
-    ```json
+```json
     {
         "name": "Java Dev Environment",
         "image": "mcr.microsoft.com/devcontainers/java:1-21",
@@ -48,7 +48,7 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
         },
         "postCreateCommand": "mvn clean install"
     }
-    ```
+```
 
 3. Asegurate de la instalación de Java y Maven:
     * java -version
@@ -175,7 +175,7 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
 3. **Ejecutar el Contenedor:**
     * En Play with Docker, ejecuta el contenedor con el siguiente comando:
     
-    ```bash
+    ```
         docker run -p 8080:8080 <tu-usuario>/microservice-helloworld
     ```
 
