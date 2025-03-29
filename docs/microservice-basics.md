@@ -117,24 +117,21 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
 1. **Crear el Dockerfile:**
     * En la raíz del proyecto, crea un archivo llamado `Dockerfile` con el siguiente contenido:
 
-```dockerfile
-    FROM openjdk:17-jdk-slim
-    COPY target/microservice-helloworld.jar microservice-helloworld.jar
-    ENTRYPOINT ["java", "-jar", "/microservice-helloworld.jar"]
-```
+    ```dockerfile
+        FROM openjdk:17-jdk-slim
+        COPY target/microservice-helloworld.jar microservice-helloworld.jar
+        ENTRYPOINT ["java", "-jar", "/microservice-helloworld.jar"]
+    ```
 
 2. **Construir la Imagen Docker:**
     * Ejecuta el siguiente comando para compilar el proyecto y generar el archivo JAR:
-    
-```bash
-    mvn clean package
-```
-
+    ```bash
+        mvn clean package
+    ```
     * Construye la imagen Docker con el comando:
-    
-```bash
-    docker build -t microservice-helloworld .
-```
+    ```bash
+        docker build -t microservice-helloworld .
+    ```
 
 3. **Subir la Imagen a Docker Hub:**
     * Asegurate de tener/crear cuenta en [Docker Hub](https://hub.docker.com/)
