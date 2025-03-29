@@ -79,22 +79,22 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
     * En GitHub Codespaces, navega a `src/main/java/com/eci/arcn/microservice-helloworld`.
     * Crea una nueva clase llamada `HelloWorldController.java` con el siguiente contenido:
 
-    ```java
+```java
 
-        package com.eci.arcn.helloworld;
+    package com.eci.arcn.helloworld;
 
-        import org.springframework.web.bind.annotation.GetMapping;
-        import org.springframework.web.bind.annotation.RestController;
+    import org.springframework.web.bind.annotation.GetMapping;
+    import org.springframework.web.bind.annotation.RestController;
 
-        @RestController
-        public class HelloWorldController {
+    @RestController
+    public class HelloWorldController {
 
-            @GetMapping("/hello")
-            public String hello() {
-                return "Hello, World!";
-            }
+        @GetMapping("/hello")
+        public String hello() {
+            return "Hello, World!";
         }
-    ```
+    }
+```
 
 2. **Configurar la Aplicación:**
     * Asegúrate de que la clase principal del proyecto esté anotada con `@SpringBootApplication`.
@@ -102,67 +102,67 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
 3. **Ejecutar la Aplicación:**
     * Utiliza el terminal integrado en Codespaces para ejecutar tu aplicación con el comando:
     
-    ```bash
-        mvn spring-boot:run
-    ```
+```bash
+    mvn spring-boot:run
+```
 
     * Verifica que la aplicación se ejecute correctamente y esté accesible ejecutando
     
-    ```bash
-        curl http://localhost:8080/hello
-    ```
+```bash
+    curl http://localhost:8080/hello
+```
 
 ## Paso 5: Crear y Subir la Imagen Docker
 
 1. **Crear el Dockerfile:**
     * En la raíz del proyecto, crea un archivo llamado `Dockerfile` con el siguiente contenido:
 
-    ```dockerfile
-        FROM openjdk:17-jdk-slim
-        COPY target/microservice-helloworld.jar microservice-helloworld.jar
-        ENTRYPOINT ["java", "-jar", "/microservice-helloworld.jar"]
-    ```
+```dockerfile
+    FROM openjdk:17-jdk-slim
+    COPY target/microservice-helloworld.jar microservice-helloworld.jar
+    ENTRYPOINT ["java", "-jar", "/microservice-helloworld.jar"]
+```
 
 2. **Construir la Imagen Docker:**
     * Ejecuta el siguiente comando para compilar el proyecto y generar el archivo JAR:
     
-    ```bash
-        mvn clean package
-    ```
+```bash
+    mvn clean package
+```
 
     * Construye la imagen Docker con el comando:
     
-    ```bash
-        docker build -t microservice-helloworld .
-    ```
+```bash
+    docker build -t microservice-helloworld .
+```
 
 3. **Subir la Imagen a Docker Hub:**
     * Asegurate de tener/crear cuenta en [Docker Hub](https://hub.docker.com/)
     * Etiqueta la imagen con tu nombre de usuario de Docker Hub:
     
-    ```bash
-        docker tag microservice-helloworld <tu-usuario>/microservice-helloworld
-    ```
+```bash
+    docker tag microservice-helloworld <tu-usuario>/microservice-helloworld
+```
 
     * Inicia sesión en Docker Hub:
         - Github codespace, genera un login del space a Docker Hub, por tanto debes desloguear primero
         
-        ```bash
-            docker logout
-        ```
+```bash
+    docker logout
+```
 
     * Una vez deslogueado, loguearse con el usuario de Docker Hub
         
-        ```bash
-            docker login -u <tu-usuario>
-        ```
+```bash
+    docker login -u <tu-usuario>
+```
 
     * Te pedira un password, para el cual debes generar un "Personal Access Token" en Docker Hub
     * Sube la imagen a Docker Hub:
      
-        ```bash
-            docker push <tu-usuario>/microservice-helloworld
-        ```
+```bash
+    docker push <tu-usuario>/microservice-helloworld
+```
 
 ## Paso 6: Ejecutar el Servicio en Play with Docker
 
@@ -175,8 +175,8 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
 3. **Ejecutar el Contenedor:**
     * En Play with Docker, ejecuta el contenedor con el siguiente comando:
     
-    ```
-        docker run -p 8080:8080 <tu-usuario>/microservice-helloworld
-    ```
+```bash
+    docker run -p 8080:8080 <tu-usuario>/microservice-helloworld
+```
 
     * Accede al servicio desde el enlace proporcionado por Play with Docker, añadiendo `/hello` al final de la URL para ver el mensaje "Hello, World!".
