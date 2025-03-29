@@ -104,13 +104,13 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
     
 ```bash
     mvn spring-boot:run
-```text
+```
 
-    * Verifica que la aplicación se ejecute correctamente y esté accesible ejecutando
+* Verifica que la aplicación se ejecute correctamente y esté accesible ejecutando
     
 ```bash
     curl http://localhost:8080/hello
-```text
+```
 
 ## Paso 5: Crear y Subir la Imagen Docker
 
