@@ -9,6 +9,7 @@ nav:
   - BDD Parte 1: bdd-part1.md
   - BDD Parte 2: bdd-part2.md
   - DDD: ddd.md
+  - Microservice Basics: microservice-basics.md
 
 plugins:
   - search
