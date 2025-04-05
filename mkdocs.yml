@@ -10,6 +10,7 @@ nav:
   - BDD Parte 2: bdd-part2.md
   - DDD: ddd.md
   - Microservice Basics: microservice-basics.md
+  - Event driven lab: event-driven-lab.md
 
 plugins:
   - search
