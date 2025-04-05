@@ -1,0 +1,833 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Iván Sanchez">
+      
+      
+      
+        <link rel="prev" href="../tdd/">
+      
+      
+        <link rel="next" href="../bdd-part2/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
+    
+    
+      
+        <title>BDD Parte 1 - ARCN - Hands on Labs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.4af4bdda.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#laboratorio-de-bdd-con-selenium-chromedriver-y-java-en-github-codespaces" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ARCN - Hands on Labs" class="md-header__button md-logo" aria-label="ARCN - Hands on Labs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ARCN - Hands on Labs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              BDD Parte 1
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ARCN - Hands on Labs" class="md-nav__button md-logo" aria-label="ARCN - Hands on Labs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ARCN - Hands on Labs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SOLID
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tdd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TDD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    BDD Parte 1
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    BDD Parte 1
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-crear-un-nuevo-repositorio-en-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Crear un nuevo repositorio en GitHub
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-configurar-github-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Configurar GitHub Codespaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-crear-codespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Crear Codespace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-creacion-del-proyecto-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Creación del Proyecto Maven
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-agregar-dependencias-de-selenium-y-cucumber" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Agregar dependencias de Selenium y Cucumber
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-crear-la-estructura-bdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Crear la estructura BDD
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-crear-escenario-bdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Crear escenario BDD
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bdd-part2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BDD Parte 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ddd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DDD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../microservice-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Microservice Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event-driven-lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Event driven lab
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-crear-un-nuevo-repositorio-en-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Crear un nuevo repositorio en GitHub
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-configurar-github-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Configurar GitHub Codespaces
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-crear-codespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Crear Codespace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-creacion-del-proyecto-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Creación del Proyecto Maven
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-agregar-dependencias-de-selenium-y-cucumber" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Agregar dependencias de Selenium y Cucumber
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-crear-la-estructura-bdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Crear la estructura BDD
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-crear-escenario-bdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Crear escenario BDD
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="laboratorio-de-bdd-con-selenium-chromedriver-y-java-en-github-codespaces">Laboratorio de BDD con Selenium, ChromeDriver y Java en GitHub Codespaces</h1>
+<h2 id="1-crear-un-nuevo-repositorio-en-github">1. Crear un nuevo repositorio en GitHub</h2>
+<ul>
+<li>Ve a GitHub y crea un nuevo repositorio.</li>
+<li>Dale un nombre y una descripción a tu repositorio.</li>
+</ul>
+<h2 id="2-configurar-github-codespaces">2. Configurar GitHub Codespaces</h2>
+<ul>
+<li>Crear un nuevo archivo</li>
+<li>En nombre de archivo ingresar ".devcontainer/devcontainer.json"</li>
+<li>Pegar la siguiente configuración</li>
+</ul>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;BDD Lab with Selenium and Java&quot;,
+  &quot;image&quot;: &quot;mcr.microsoft.com/devcontainers/java:17&quot;,
+  &quot;settings&quot;: {
+    &quot;terminal.integrated.shell.linux&quot;: &quot;/bin/bash&quot;
+  },
+  &quot;features&quot;: {
+    &quot;ghcr.io/devcontainers/features/java:1&quot;: {
+      &quot;version&quot;: &quot;17&quot;
+    },
+    &quot;ghcr.io/devcontainers-extra/features/maven-sdkman:2&quot;: {},
+    &quot;ghcr.io/devcontainers/features/node:1&quot;: {
+      &quot;version&quot;: &quot;lts&quot;
+    },
+    &quot;ghcr.io/kreemer/features/chrometesting:1&quot;: {}
+  },
+  &quot;customizations&quot;: {
+    &quot;vscode&quot;: {
+      &quot;extensions&quot;: [
+        &quot;vscjava.vscode-java-pack&quot;,
+        &quot;vscjava.vscode-maven&quot;,
+        &quot;dbaeumer.vscode-eslint&quot;,
+        &quot;ms-python.python&quot;,
+        &quot;ms-python.vscode-pylance&quot;
+      ]
+    }
+  },
+  &quot;forwardPorts&quot;: [8080],
+  &quot;portsAttributes&quot;: {
+    &quot;8080&quot;: {
+      &quot;label&quot;: &quot;Application&quot;,
+      &quot;onAutoForward&quot;: &quot;notify&quot;
+    }
+  },
+  &quot;postCreateCommand&quot;: &quot;sudo apt update&quot;,
+  &quot;remoteUser&quot;: &quot;vscode&quot;
+}
+</code></pre>
+<ul>
+<li>Confirmar los cambios "<strong>Commit changes...</strong>"</li>
+<li>Agrega un comentario y "<strong>Commit changes</strong>"</li>
+</ul>
+<h2 id="3-crear-codespace">3. Crear Codespace</h2>
+<ul>
+<li>Volver a la carpeta base de tu repositorio haciendo click en "<strong>&lt;&gt; Code</strong>" ubicado en la parte superior izquierda.</li>
+<li>Hacer click en el botón <strong>&lt;&gt; code</strong>, pestaña Codespaces y click en <strong>Create codespace on main</strong>.</li>
+</ul>
+<h2 id="4-creacion-del-proyecto-maven">4. Creación del Proyecto Maven</h2>
+<p>Para desarrollar el laboratorio, primero debemos crear un proyecto Maven. Ejecuta el siguiente comando, reemplazando las variables -DgroupId y -DartifactId:</p>
+<pre><code class="language-sh">mvn archetype:generate -DgroupId={com.eci.myproject} -DartifactId={bdd-java} -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+</code></pre>
+<p>Este comando generará la estructura básica del proyecto con las carpetas <code>src/main/java</code> y <code>src/test/java</code>.</p>
+<h2 id="4-agregar-dependencias-de-selenium-y-cucumber">4. Agregar dependencias de Selenium y Cucumber</h2>
+<ul>
+<li>Crea un archivo <code>pom.xml</code> en la raíz de tu proyecto y agrega las dependencias necesarias para Selenium, ChromeDriver y Cucumber:</li>
+</ul>
+<pre><code class="language-xml">  &lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.seleniumhq.selenium&lt;/groupId&gt;
+        &lt;artifactId&gt;selenium-java&lt;/artifactId&gt;
+        &lt;version&gt;4.0.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- Cucumber --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.cucumber&lt;/groupId&gt;
+        &lt;artifactId&gt;cucumber-java&lt;/artifactId&gt;
+        &lt;version&gt;7.0.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.cucumber&lt;/groupId&gt;
+        &lt;artifactId&gt;cucumber-junit&lt;/artifactId&gt;
+        &lt;version&gt;7.0.0&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+</code></pre>
+<h2 id="5-crear-la-estructura-bdd">5. Crear la estructura BDD</h2>
+<ul>
+<li>Dentro de la carpeta src/test/java, generar las siguientes carpetas:<ul>
+<li>features</li>
+<li>steps</li>
+<li>runners</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-crear-escenario-bdd">6. Crear escenario BDD</h2>
+<ul>
+<li>Dentro de la carpeta <strong>features</strong>, crear un archivo con el nombre "<strong>google_search.feature</strong>"</li>
+<li>Agregar el siguiente texto</li>
+</ul>
+<pre><code class="language-gherkin">Feature: Google Search
+
+  Scenario: Search for a term
+    Given I am on the Google search page
+    When I search for &quot;GitHub&quot;
+    Then I should see &quot;GitHub&quot; in the results
+</code></pre>
+<ul>
+<li>Dentro de la carpeta <strong>steps</strong>, crear el archivo <strong>SearchSteps.java</strong></li>
+<li>Pegar el siguiente código</li>
+</ul>
+<pre><code class="language-java">import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.concurrent.TimeUnit;
+
+public class SearchSteps {
+    private WebDriver driver;
+
+    @Before
+    public void setUp() {
+        try {
+            System.setProperty(&quot;webdriver.chrome.driver&quot;, &quot;/usr/local/bin/chromedriver&quot;);
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments(&quot;--headless&quot;);
+            options.addArguments(&quot;--disable-gpu&quot;);
+            options.addArguments(&quot;--no-sandbox&quot;);
+            options.addArguments(&quot;--disable-dev-shm-usage&quot;);
+            options.addArguments(&quot;--remote-allow-origins=*&quot;);
+            driver = new ChromeDriver(options);
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(&quot;Failed to initialize ChromeDriver&quot;, e);
+        }
+    }
+
+    @Given(&quot;I am on the Google search page&quot;)
+    public void i_am_on_the_google_search_page() {
+        driver.get(&quot;https://www.google.com&quot;);
+    }
+
+    @When(&quot;I search for {string}&quot;)
+    public void i_search_for(String term) {
+        WebElement searchBox = driver.findElement(By.name(&quot;q&quot;));
+        searchBox.sendKeys(term);
+        searchBox.submit();
+    }
+
+    @Then(&quot;I should see {string} in the results&quot;)
+    public void i_should_see_in_the_results(String term) {
+        assert driver.getPageSource().contains(term);
+    }
+
+    @After
+    public void tearDown() {
+        driver.quit();
+    }
+}
+</code></pre>
+<ul>
+<li>Dentro de la carpeta <strong>runners</strong>, crear el archivo <strong>TestRunner.java</strong></li>
+<li>Pegar el siguiente código</li>
+</ul>
+<pre><code class="language-java">import org.junit.runner.RunWith;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+
+
+@RunWith(Cucumber.class)
+@CucumberOptions(features = &quot;src/test/java/features&quot;, glue=&quot;steps&quot;,
+monochrome = true,
+publish = true,
+plugin = {&quot;pretty&quot;, &quot;junit:target/JUnitReports/report.xml&quot;,
+        &quot;json:target/JSonReports/report.json&quot;,
+        &quot;html:target/HtmlReports/report.html&quot;
+        }
+)
+public class TestRunner {
+}
+</code></pre>
+<ul>
+<li>ejecutar los escenarios con </li>
+</ul>
+<pre><code class="language-bash">mvn test
+</code></pre>
+<ul>
+<li>validar el reporte html, descargando el archivo "target/HtmlReports/report.html"</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
