@@ -1,6 +1,6 @@
-# Laboratorio: Creación de Microservicios con Spring Boot, RabbitMQ, Docker y Play With Docker
+# Laboratorio: Creación de Microservicios con Spring Boot, RabbitMQ y Docker Compose
 
-**Objetivo**: Crear dos servicios Spring Boot (Productor y Consumidor) que se comuniquen a través de RabbitMQ, todo orquestado con Docker Compose para facilitar las pruebas en Play With Docker.
+**Objetivo**: Crear dos servicios Spring Boot (Productor y Consumidor) que se comuniquen a través de RabbitMQ, todo orquestado con Docker Compose, y ejecutarlo en un entorno online gratuito.
 
 Estructura del Repositorio (Ejemplo):
 
@@ -366,9 +366,9 @@ services:
     hostname: rabbitmq              # Nombre de host para que los servicios se conecten
     ports:
       - "5672:5672"   # Puerto AMQP
-      - "15672:15672" # Puerto UI de Gestión (accesible vía Play With Docker)
+      - "15672:15672" # Puerto UI de Gestión de RabbitMQ
     # volumes:
-    #   - rabbitmq_data:/var/lib/rabbitmq/ # Persistencia (opcional para PWD)
+    #   - rabbitmq_data:/var/lib/rabbitmq/ # Persistencia (opcional en entornos efímeros)
     # environment:
       # Puedes mantener los de por defecto (guest/guest) o definirlos
       # RABBITMQ_DEFAULT_USER: user
@@ -425,41 +425,112 @@ networks:
 
 ---
 
-## Paso 6: Ejecutar en Play with Docker
+## Paso 6: Ejecutar los Servicios
 
-1. Ve a Play with Docker, inicia una sesión y añade una instancia.
-2. Clona tu repositorio:
+> **¿Cuándo elegir cada opción?**
+> - **Opción A (Killercoda):** Si quieres acceder a una **URL pública** para los servicios y ver la RabbitMQ UI desde el navegador.
+> - **Opción B (GitHub Codespaces):** Si ya tienes el Codespace abierto del Paso 1, es la opción más rápida. Todo funciona en el mismo entorno.
 
-```bash
-git clone https://github.com/<tu-usuario>/event-driven-lab.git
-cd event-driven-lab/
-```
-3. Levanta los servicios:
+---
 
-```bash
-docker-compose up -d
-```
+### Opción A: Usar Killercoda (entorno online con URL pública)
 
-4. Probar eventos
+> **¿Por qué Killercoda?** Es una plataforma gratuita con Docker y Git preinstalados, accesible desde el navegador. Permite exponer múltiples puertos vía su menú **"Traffic / Port"**.
 
-1. Enviar mensaje desde producer
+1. **Acceder a Killercoda:**
+    * Ve a [Killercoda Ubuntu Playground](https://killercoda.com/playgrounds/scenario/ubuntu) e inicia sesión con tu cuenta de GitHub o Google.
+    * Verás un terminal de Linux listo para usar.
 
-```bash
-curl -X POST "http://localhost:8080/api/messages/send?message=HolaDesdePlayWithDocker"
-```
+2. **Clonar tu repositorio:**
+    ```bash
+    git clone https://github.com/<tu-usuario>/event-driven-lab.git
+    cd event-driven-lab/
+    ```
 
-* Deberías recibir una respuesta como ```Mensaje 'HolaDesdePlayWithDocker' enviado!```
+3. **Levantar los servicios con Docker Compose:**
 
-2. Verifica el Consumidor: Revisa los logs del consumidor:
+    > **Compatibilidad de comandos:** Dependiendo de la versión disponible en el entorno, usa uno de estos comandos:
+    > - **Docker Compose V1** (binario clásico, más común en Killercoda): `docker-compose up -d`
+    > - **Docker Compose V2** (plugin moderno): `docker compose up -d`
+    > Puedes verificar cuál tienes con: `docker-compose --version` o `docker compose version`
 
-```bash
-docker-compose logs consumer-service
-```
+    ```bash
+    docker-compose up -d
+    ```
+    > Espera ~30 segundos a que RabbitMQ esté completamente listo antes de enviar mensajes.
 
-* Deberías ver la línea ```Mensaje recibido: 'HolaDesdePlayWithDocker'``` y ```>>> Mensaje Procesado: HolaDesdePlayWithDocker```.
+4. **Verificar que los contenedores están corriendo:**
+    ```bash
+    docker-compose ps
+    ```
 
-3. Explora RabbitMQ Management UI (Opcional):
-* Haz clic en el botón azul del puerto 15672.
-* Se abrirá la interfaz web de RabbitMQ.
-* Inicia sesión con guest / guest (o las credenciales que hayas configurado).
-* Ve a la pestaña "Queues", busca messages.queue. Podrás ver si hay mensajes en cola, el ritmo de entrada/salida, etc.
+5. **Probar el flujo de eventos:**
+
+    **a. Enviar un mensaje desde el Productor:**
+    ```bash
+    curl -X POST "http://localhost:8080/api/messages/send?message=HolaDesdeKillercoda"
+    ```
+    * Deberías ver: `Mensaje 'HolaDesdeKillercoda' enviado!`
+
+    **b. Verificar que el Consumidor recibió el mensaje:**
+    ```bash
+    docker-compose logs consumer
+    ```
+    * Deberías ver: `Mensaje recibido: 'HolaDesdeKillercoda'` y `>>> Mensaje Procesado: HolaDesdeKillercoda`.
+
+    > **Nota:** Usa el nombre del **servicio** (`consumer`), no el del contenedor (`consumer-service`). Son distintos en el `docker-compose.yml`.
+
+6. **Acceder a los servicios desde el navegador:**
+    * Haz clic en el botón **"Traffic / Port"** (esquina superior derecha del terminal de Killercoda).
+    * Para acceder al **Producer API** (puerto 8080): ingresa `8080` y confirma.
+    * Para acceder a la **RabbitMQ Management UI** (puerto 15672): ingresa `15672` y confirma.
+        * Inicia sesión con usuario `guest` y contraseña `guest`.
+        * Ve a la pestaña **"Queues"** → busca `messages.queue` para ver el estado de la cola y el flujo de mensajes.
+
+    > ⚠️ **Error 405 "Method Not Allowed" al abrir la URL del producer en el navegador:** Esto es normal. El endpoint `/api/messages/send` es un `@PostMapping` y **solo acepta peticiones HTTP POST**. El navegador siempre hace GET al escribir una URL, por eso falla. Para enviar mensajes usa:
+    > - **`curl` desde el terminal** ✅ (recomendado — ya probado y funciona): `curl -X POST "http://localhost:8080/api/messages/send?message=test"`
+    > - **[Hoppscotch](https://hoppscotch.io)** (Postman online): selecciona método POST y pega la URL pública de Killercoda con la ruta `/api/messages/send?message=test`. ⚠️ Si obtienes un **"Network Error"**, cambia el modo de **"Browser" a "Proxy"** en la sección *Interceptor* que aparece debajo del error — esto evita el bloqueo CORS del navegador.
+
+    > **Nota:** Las URLs públicas de Killercoda son válidas solo durante tu sesión activa (máximo **1 hora** en el plan gratuito). Asegúrate de tener las imágenes publicadas en Docker Hub (Paso 4) antes de comenzar esta etapa.
+
+---
+
+### Opción B: Ejecutar directamente en GitHub Codespaces
+
+Si ya tienes tu Codespace del Paso 1 abierto, puedes correr todo el laboratorio ahí mismo sin necesidad de ninguna plataforma adicional.
+
+1. **Verifica que estés en la raíz del proyecto:**
+    ```bash
+    pwd
+    # Debe mostrar: /workspaces/event-driven-lab
+    ```
+
+2. **Levantar los servicios:**
+    ```bash
+    docker-compose up -d
+    ```
+    > Espera ~30 segundos a que RabbitMQ esté completamente disponible.
+
+3. **Probar el flujo de eventos:**
+
+    **a. Enviar un mensaje:**
+    ```bash
+    curl -X POST "http://localhost:8080/api/messages/send?message=HolaDesdeCodespaces"
+    ```
+    * Deberías ver: `Mensaje 'HolaDesdeCodespaces' enviado!`
+
+    **b. Verificar el Consumidor:**
+    ```bash
+    docker-compose logs consumer
+    ```
+    * Deberías ver: `Mensaje recibido: 'HolaDesdeCodespaces'` y `>>> Mensaje Procesado: HolaDesdeCodespaces`.
+
+    > **Nota:** Usa el nombre del **servicio** (`consumer`), no el del contenedor (`consumer-service`).
+
+4. **Acceder desde el navegador (opcional):**
+    * GitHub Codespaces detectará automáticamente los puertos abiertos y mostrará una notificación en la esquina inferior derecha.
+    * También puedes ir a la pestaña **"Ports"** en el panel inferior de VS Code.
+    * Abre el puerto `8080` para el Producer API.
+    * Abre el puerto `15672` para la **RabbitMQ Management UI**.
+        * Inicia sesión con `guest` / `guest`.
+        * Ve a la pestaña **"Queues"** → busca `messages.queue`.

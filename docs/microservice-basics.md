@@ -161,19 +161,69 @@ Este laboratorio te guiará a través de los pasos necesarios para crear un micr
         docker push <tu-usuario>/microservice-helloworld
     ```
 
-## Paso 6: Ejecutar el Servicio en Play with Docker
+## Paso 6: Ejecutar el Servicio en Killercoda
 
-1. **Acceder a Play with Docker:**
-    * Ve a [Play with Docker](https://labs.play-with-docker.com/) y accede con tu cuenta de Docker Hub.
+> **¿Por qué Killercoda?** Es una plataforma gratuita que provee entornos de Linux con Docker preinstalado, accesibles desde el navegador sin necesidad de instalar nada adicional. Es más estable y confiable que Play with Docker.
 
-2. **Crear una Instancia:**
-    * Haz clic en "Start" para crear una nueva instancia de Docker.
+### Opción A: Usar Killercoda (entorno online con URL pública)
 
-3. **Ejecutar el Contenedor:**
-    * En Play with Docker, ejecuta el contenedor con el siguiente comando:
-    
+1. **Acceder a Killercoda:**
+    * Ve a [Killercoda Ubuntu Playground](https://killercoda.com/playgrounds/scenario/ubuntu) e inicia sesión (puedes usar tu cuenta de GitHub o Google).
+    * Verás un terminal de Linux listo para usar con Docker preinstalado.
+
+2. **Verificar Docker:**
+    * En el terminal de Killercoda, verifica que Docker está disponible:
     ```bash
-        docker run -p 8080:8080 <tu-usuario>/microservice-helloworld
+        docker --version
     ```
 
-    * Accede al servicio desde el enlace proporcionado por Play with Docker, añadiendo `/hello` al final de la URL para ver el mensaje "Hello, World!".
+3. **Ejecutar el Contenedor:**
+    * Ejecuta tu imagen publicada en Docker Hub:
+    ```bash
+        docker run -d -p 8080:8080 <tu-usuario>/microservice-helloworld
+    ```
+    * El flag `-d` ejecuta el contenedor en segundo plano (detached mode).
+
+4. **Verificar que el servicio está activo:**
+
+    > ⏳ **Espera ~20 segundos** antes de ejecutar el `curl`. Spring Boot necesita tiempo para iniciar. Puedes verificar que está listo con:
+    > ```bash
+    >     docker logs $(docker ps -lq)
+    > ```
+    > Busca el mensaje `Started MicroserviceHelloworldApplication in X seconds` para confirmar que está listo.
+
+    > ⚠️ **Si el curl no devuelve respuesta o devuelve un error 401:** Verifica que tu `pom.xml` **no incluya** la dependencia `spring-boot-starter-security`. Si está presente, elimínala y reconstruye la imagen. Spring Security protege todos los endpoints por defecto y bloqueará el acceso a `/hello`.
+
+    ```bash
+        curl http://localhost:8080/hello
+    ```
+    * Deberías ver la respuesta: `Hello, World!`
+
+5. **Acceder al servicio desde el navegador:**
+    * Haz clic en el botón **"Traffic / Port"** ubicado en la esquina superior derecha del terminal de Killercoda.
+    * Ingresa el puerto `8080` y confirma.
+    * Killercoda generará una **URL pública temporal**. Añade `/hello` al final para ver el mensaje `Hello, World!` en el navegador.
+
+    > **Nota:** La URL pública de Killercoda es válida solo durante tu sesión activa (máximo **1 hora** en el plan gratuito). Asegúrate de haber completado los Pasos 1–5 con anticipación.
+
+---
+
+### Opción B: Verificar directamente en GitHub Codespaces (sin plataforma externa)
+
+Si ya tienes tu imagen publicada en Docker Hub, puedes ejecutar y verificar el microservicio **directamente en el mismo Codespace** que usaste en los pasos anteriores, sin necesidad de ninguna plataforma adicional.
+
+1. **Ejecutar el contenedor en Codespaces:**
+    ```bash
+        docker run -d -p 8080:8080 <tu-usuario>/microservice-helloworld
+    ```
+
+2. **Verificar la respuesta del servicio:**
+    ```bash
+        curl http://localhost:8080/hello
+    ```
+    * Deberías ver: `Hello, World!`
+
+3. **Acceder desde el navegador (opcional):**
+    * GitHub Codespaces detectará automáticamente el puerto `8080` abierto y mostrará una notificación en la esquina inferior derecha.
+    * Haz clic en **"Open in Browser"** o ve a la pestaña **"Ports"** del panel inferior de VS Code y abre el puerto `8080`.
+    * Añade `/hello` a la URL que se genera para ver el mensaje en el navegador.
