@@ -1,0 +1,1288 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Iván Sanchez">
+      
+      
+      
+        <link rel="prev" href="../event-driven-lab/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>SDD - ARCN - Hands on Labs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#laboratorio-sdd-multi-agent-orchestration-en-codespaces" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ARCN - Hands on Labs" class="md-header__button md-logo" aria-label="ARCN - Hands on Labs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ARCN - Hands on Labs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SDD
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ARCN - Hands on Labs" class="md-nav__button md-logo" aria-label="ARCN - Hands on Labs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ARCN - Hands on Labs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOLID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tdd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TDD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bdd-part1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BDD Parte 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bdd-part2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BDD Parte 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ddd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DDD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../microservice-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microservice Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event-driven-lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event driven lab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDD
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-configuracion-del-entorno-devcontainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Configuración del Entorno (.devcontainer)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-configuracion-de-cline-en-el-codespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Configuración de Cline en el Codespace
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Configuración de Cline en el Codespace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-abrir-la-extension-cline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Abrir la extensión Cline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-seleccionar-el-modo-de-uso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Seleccionar el modo de uso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-configurar-el-proveedor-configure-your-provider" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Configurar el proveedor (Configure your provider)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-verificar-la-configuracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Verificar la configuración
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-estructura-de-agentes-clineagents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Estructura de Agentes (.cline/agents/)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-flujo-de-trabajo-aidlc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Flujo de Trabajo (AIDLC)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Flujo de Trabajo (AIDLC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modos-de-cline-plan-vs-act" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔀 Modos de Cline: PLAN vs ACT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-1-definicion-del-producto-po-backlogmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 1: Definición del Producto — @po → backlog.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-2-refinamiento-po-ajusta-criterios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 2: Refinamiento — po ajusta criterios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-3-definicion-de-la-arquitectura-architect-architecturemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 3: Definición de la Arquitectura — architect → architecture.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-4-desglose-de-tareas-architect-tasksmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 4: Desglose de Tareas — architect → tasks.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-5-implementacion-developer-construye-el-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 5: Implementación — developer construye el código
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Paso 5: Implementación — developer construye el código">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#50-estructura-de-la-solucion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.0 — Estructura de la solución
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5n-implementacion-tdd-por-historia-de-usuario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.N — Implementación TDD por Historia de Usuario
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-6-validacion-po-revisa-el-resultado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 6: Validación — /po revisa el resultado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-configuracion-del-entorno-devcontainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Configuración del Entorno (.devcontainer)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-configuracion-de-cline-en-el-codespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Configuración de Cline en el Codespace
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Configuración de Cline en el Codespace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-abrir-la-extension-cline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Abrir la extensión Cline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-seleccionar-el-modo-de-uso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Seleccionar el modo de uso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-configurar-el-proveedor-configure-your-provider" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Configurar el proveedor (Configure your provider)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-verificar-la-configuracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Verificar la configuración
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-estructura-de-agentes-clineagents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Estructura de Agentes (.cline/agents/)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-flujo-de-trabajo-aidlc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Flujo de Trabajo (AIDLC)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Flujo de Trabajo (AIDLC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modos-de-cline-plan-vs-act" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔀 Modos de Cline: PLAN vs ACT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-1-definicion-del-producto-po-backlogmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 1: Definición del Producto — @po → backlog.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-2-refinamiento-po-ajusta-criterios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 2: Refinamiento — po ajusta criterios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-3-definicion-de-la-arquitectura-architect-architecturemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 3: Definición de la Arquitectura — architect → architecture.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-4-desglose-de-tareas-architect-tasksmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 4: Desglose de Tareas — architect → tasks.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-5-implementacion-developer-construye-el-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 5: Implementación — developer construye el código
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Paso 5: Implementación — developer construye el código">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#50-estructura-de-la-solucion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.0 — Estructura de la solución
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5n-implementacion-tdd-por-historia-de-usuario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.N — Implementación TDD por Historia de Usuario
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-6-validacion-po-revisa-el-resultado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 6: Validación — /po revisa el resultado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="laboratorio-sdd-multi-agent-orchestration-en-codespaces">Laboratorio: SDD &amp; Multi-Agent Orchestration en Codespaces</h1>
+<h2 id="1-configuracion-del-entorno-devcontainer">1. Configuración del Entorno (.devcontainer)</h2>
+<p>Para que el laboratorio funcione, el repositorio de GitHub debe tener una carpeta .devcontainer/ con el archivo devcontainer.json. Esto instalará automáticamente las herramientas necesarias.</p>
+<p>Configuración sugerida:</p>
+<p>'''
+{
+  "name": "NET 10 SDD Lab",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:10.0",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "saoudrizwan.claude-dev", // Extensión de Cline
+        "ms-dotnettools.csdevkit",
+        "Codeium.codeium"
+      ]
+    }
+  }
+}
+'''</p>
+<h2 id="2-configuracion-de-cline-en-el-codespace">2. Configuración de Cline en el Codespace</h2>
+<p>Una vez abierto el Codespace con el <code>.devcontainer</code> configurado, la extensión <strong>Cline</strong> (<code>saoudrizwan.claude-dev</code>) estará instalada pero necesita ser configurada manualmente.</p>
+<blockquote>
+<p>⚠️ <strong>No uses "Login to Cline" en un Codespace</strong></p>
+<p>El botón <strong>"Login to Cline"</strong> usa autenticación OAuth con redirect a <code>vscode://</code>. El navegador del Codespace <strong>no puede interceptar ese esquema</strong> cuando VS Code corre de forma remota, por lo que la autenticación queda colgada indefinidamente aunque hayas autorizado en el portal. Usa siempre la opción <strong>"Bring my own API key"</strong>.</p>
+</blockquote>
+<h3 id="21-abrir-la-extension-cline">2.1 Abrir la extensión Cline</h3>
+<p>En la barra lateral de VS Code (dentro del Codespace), haz clic en el ícono de <strong>Cline</strong> (el logo de hormiga 🐜) o usa <code>Ctrl+Shift+P</code> → <code>Cline: Open in Editor</code>.</p>
+<h3 id="22-seleccionar-el-modo-de-uso">2.2 Seleccionar el modo de uso</h3>
+<p>Al abrirse verás la pantalla <strong>"How will you use Cline?"</strong> con tres opciones:</p>
+<table>
+<thead>
+<tr>
+<th>Opción</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Absolutely Free</td>
+<td>Modelos gratuitos gestionados por Cline (requiere Login)</td>
+</tr>
+<tr>
+<td>Frontier Model</td>
+<td>Claude 4.5, GPT-5 Codex, etc. (requiere Login)</td>
+</tr>
+<tr>
+<td><strong>Bring my own API key</strong> ✅</td>
+<td>Usa tu propio proveedor y API Key</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Selecciona <strong>"Bring my own API key"</strong>.</li>
+<li>Haz clic en <strong>"Continue"</strong>.</li>
+</ol>
+<h3 id="23-configurar-el-proveedor-configure-your-provider">2.3 Configurar el proveedor (Configure your provider)</h3>
+<p>En la siguiente pantalla <strong>"Configure your provider"</strong>:</p>
+<ol>
+<li><strong>API Provider</strong> → selecciona <code>OpenRouter</code> (si no está ya seleccionado).</li>
+<li><strong>OpenRouter API Key</strong> → pega tu API Key de OpenRouter.</li>
+<li>Si aún no tienes una: ve a <a href="https://openrouter.ai">https://openrouter.ai</a> → <strong>Keys</strong> → genera una nueva clave gratuita.</li>
+<li><strong>Model</strong> → Los modelos gratuitos de OpenRouter tienen alta demanda y cuotas que varían. Usa la siguiente lista en orden de preferencia — si uno falla, prueba el siguiente:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Prioridad</th>
+<th>Modelo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1️⃣</td>
+<td><code>z-ai/glm-4.5-air:free</code></td>
+<td>✅ <strong>Confirmado funcionando</strong> — buena capacidad de código</td>
+</tr>
+<tr>
+<td>2️⃣</td>
+<td><code>google/gemini-2.0-flash-exp:free</code></td>
+<td>Cuota alta, rápido, excelente para código</td>
+</tr>
+<tr>
+<td>3️⃣</td>
+<td><code>meta-llama/llama-3.3-70b-instruct:free</code></td>
+<td>Bueno para código y razonamiento</td>
+</tr>
+<tr>
+<td>4️⃣</td>
+<td><code>deepseek/deepseek-r1:free</code></td>
+<td>Razonamiento profundo, ideal para arquitectura</td>
+</tr>
+<tr>
+<td>5️⃣</td>
+<td><code>mistralai/mistral-7b-instruct:free</code></td>
+<td>Más ligero, fallback de última opción</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>Errores comunes con modelos <code>:free</code>:</strong>
+- <strong>Error 402</strong> → Olvidaste el sufijo <code>:free</code>. El modelo sin ese sufijo es de pago.
+- <strong>Error 429</strong> → Límite de velocidad superado. Espera 1 minuto y reintenta, o cambia a otro modelo de la lista.</p>
+<p>💡 La disponibilidad de modelos gratuitos en OpenRouter cambia frecuentemente. Si ninguno de la lista funciona, busca en <a href="https://openrouter.ai/models?q=free">https://openrouter.ai/models?q=free</a> cualquier modelo con el badge <strong>Free</strong> y pruébalo.</p>
+</blockquote>
+<ol>
+<li>Haz clic en <strong>"Continue"</strong>.</li>
+</ol>
+<blockquote>
+<p>🔒 <strong>Seguridad:</strong> La API Key se almacena localmente en la extensión y solo se usa para hacer peticiones a OpenRouter. No la incluyas en commits ni en archivos del repositorio. Usa los <strong>Secrets de GitHub Codespaces</strong> (<code>Settings → Codespaces → Secrets</code>) para persistirla entre sesiones de forma segura.</p>
+</blockquote>
+<h3 id="24-verificar-la-configuracion">2.4 Verificar la configuración</h3>
+<p>Escribe un mensaje de prueba en el chat de Cline:</p>
+<pre><code>Hola, ¿estás listo para trabajar?
+</code></pre>
+<p>Si recibes una respuesta coherente, la configuración es correcta y puedes continuar con el laboratorio.</p>
+<hr />
+<h2 id="3-estructura-de-agentes-clineagents">3. Estructura de Agentes (.cline/agents/)</h2>
+<p>Crear estos archivos en la raíz del proyecto. Estos definen el comportamiento de Cline en cada fase del AIDLC.</p>
+<p>.cline/agents/architect.json: Enfocado en diseño de proyectos .csproj y reglas de dependencia.</p>
+<p>.cline/agents/developer.json: Enfocado en C#, Minimal APIs y patrones de diseño.</p>
+<p>.cline/agents/po.json: Enfocado en la validación semántica de las Historias de Usuario.</p>
+<p>A. El Arquitecto (.clinerules/architect.json)</p>
+<pre><code class="language-markdown"># Role: Architect
+Eres un Arquitecto de Software experto en sistemas distribuidos y mantenibilidad a largo plazo y experto en .NET.
+
+## Principios Mandatorios:
+1. **Separación de Preocupaciones:** Todo código debe seguir Arquitectura Hexagonal. 
+   - Infraestructura (Adaptadores)
+   - Aplicación (Casos de Uso y lógica de negocio)
+   - Dominio (Entidades y Value Objects)
+   - Presentación (API REST con Minimal APIs.)
+2. **Domain-Driven Design (DDD):** Antes de codificar, define los Bounded Contexts y el Ubiquitous Language.
+3. **Emergent Design:** No sobre-diseñes. Aplica patrones solo cuando la complejidad lo justifique, siguiendo principios de XP.
+4. **Spec-Driven Development (SDD):** Las especificaciones mandan. Valida que cada componente cumpla con el contrato definido.
+
+## Proceso de Trabajo:
+- Paso 1: Analiza el requerimiento y genera un diagrama de componentes (Mermaid).
+- Paso 2: Define los puertos (interfaces) antes que las implementaciones.
+- Paso 3: Revisa que no haya fugas de lógica de negocio hacia la capa de infraestructura.
+</code></pre>
+<p>B. El Desarrollador (.cline/agents/developer.json)</p>
+<pre><code class="language-markdown"># Role: Developer
+Eres un Desarrollador Senior de .NET experto en C#, Minimal APIs y Test-Driven Development.
+
+## Principios Mandatorios:
+1. **TDD Estricto (Red → Green → Refactor):** Nunca escribas código de producción sin tener primero una prueba fallida. Trabaja escenario a escenario.
+2. **Mínimo código suficiente:** En la fase Green, escribe solo el código necesario para pasar el test en curso. No anticipes otros escenarios.
+3. **Separación de capas:**
+   - **Domain:** las entidades solo contienen validación de sus propios atributos (guardas en constructor/setters). Sin lógica de negocio.
+   - **Application:** toda la lógica de negocio reside en servicios/casos de uso que dependen de interfaces de repositorio vía inyección de dependencias.
+   - **Infrastructure:** repositorios implementados con colecciones en memoria (`List&lt;T&gt;` o `Dictionary&lt;TKey, TValue&gt;`). Sin ORM ni base de datos real.
+   - **Presentation:** endpoints REST expuestos únicamente con Minimal APIs en `Program.cs`. Sin controladores MVC ni vistas.
+4. **Convenciones .NET:** sigue las convenciones de nomenclatura estándar de .NET (PascalCase para clases/métodos, camelCase para parámetros).
+5. **Pruebas Gherkin + AAA:** los tests deben nombrarse `Given_[contexto]_When_[acción]_Then_[resultado]` y estructurarse con Arrange / Act / Assert.
+
+## Restricciones:
+- No usar Entity Framework, Dapper ni ningún ORM o conector de base de datos.
+- No generar frontend, Razor Pages, Blazor ni vistas MVC.
+- No introducir dependencias no solicitadas.
+- No modificar la arquitectura sin aprobación del Arquitecto.
+</code></pre>
+<p>C. El Product Owner (.cline/agents/po.json)</p>
+<pre><code class="language-markdown"># Role: Product Owner
+Eres un Product Owner experto en metodologías ágiles y en transformar necesidades de negocio en especificaciones accionables.
+
+## Principios Mandatorios:
+1. **Dueño del QUÉ, no del CÓMO:** Defines qué debe hacer el sistema, no cómo implementarlo. Las decisiones técnicas son del Arquitecto y el Developer.
+2. **Historias de Usuario estructuradas:** Cada HU debe seguir el formato:
+   - **Título:** identificador + nombre corto (ej. `HU-1: Registrar libro`)
+   - **Descripción:** `Como [rol] quiero [acción] para [beneficio]`
+   - **Criterios de Aceptación (CA):** escritos en formato Gherkin (`Given / When / Then`), técnicos y verificables.
+3. **Backlog priorizado:** Las HUs deben estar ordenadas por valor de negocio. Guarda el resultado en `backlog.md`.
+4. **Validación continua:** Revisa que el código entregado cumple los criterios de aceptación definidos.
+
+## Restricciones:
+- No sugerir soluciones técnicas ni cambios de arquitectura.
+- Enfocarse en el valor para el usuario final.
+- Mantener la comunicación clara, concisa y libre de jerga técnica innecesaria.
+</code></pre>
+<h2 id="4-flujo-de-trabajo-aidlc">4. Flujo de Trabajo (AIDLC)</h2>
+<p>Los estudiantes deben ejecutar los siguientes pasos para construir un <strong>backend en .NET con persistencia en memoria</strong>, sin frontend ni base de datos real.</p>
+<blockquote>
+<h3 id="modos-de-cline-plan-vs-act">🔀 Modos de Cline: PLAN vs ACT</h3>
+<p>Cline opera en dos modos que se seleccionan en la barra inferior del chat:</p>
+<table>
+<thead>
+<tr>
+<th>Modo</th>
+<th>Qué hace</th>
+<th>Cuándo usarlo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PLAN</strong></td>
+<td>Analiza y propone. <strong>No escribe archivos ni ejecuta comandos.</strong></td>
+<td>Para revisar y aprobar antes de que el agente actúe</td>
+</tr>
+<tr>
+<td><strong>ACT</strong></td>
+<td>Ejecuta acciones: crea archivos, escribe código, corre comandos.</td>
+<td>Cuando el plan ya fue revisado y aprobado</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<hr />
+<h3 id="paso-1-definicion-del-producto-po-backlogmd">Paso 1: Definición del Producto — <code>@po</code> → <code>backlog.md</code></h3>
+<blockquote>
+<p>🟢 <strong>Modo: ACT</strong> — El PO debe crear el archivo <code>backlog.md</code> en el repositorio.</p>
+</blockquote>
+<pre><code>/po, quiero crear un sistema de gestión de biblioteca. Solo necesito el backend: los bibliotecarios pueden registrar libros y los usuarios pueden prestarlos. Sin base de datos real, sin UI. Genera el archivo backlog.md con las Historias de Usuario y Criterios de Aceptación correspondientes.
+</code></pre>
+<hr />
+<h3 id="paso-2-refinamiento-po-ajusta-criterios">Paso 2: Refinamiento — <code>po</code> ajusta criterios</h3>
+<blockquote>
+<p>🟢 <strong>Modo: ACT</strong> — El PO modifica el <code>backlog.md</code> con los nuevos criterios.</p>
+</blockquote>
+<p>El estudiante revisa el <code>backlog.md</code> generado. Si falta algo, interactúa:</p>
+<pre><code>/po, añade un Criterio de Aceptación a la US1 que obligue a validar que el formato del ISBN sea válido.
+</code></pre>
+<hr />
+<h3 id="paso-3-definicion-de-la-arquitectura-architect-architecturemd">Paso 3: Definición de la Arquitectura — <code>architect</code> → <code>architecture.md</code></h3>
+<blockquote>
+<p>🟡 <strong>Modo: PLAN primero</strong> → revisa la propuesta → cambia a <strong>ACT</strong> para que escriba el archivo.</p>
+<p>Usar PLAN primero permite al estudiante validar la arquitectura propuesta antes de que el agente la materialice.</p>
+</blockquote>
+<pre><code>/architect, lee el backlog.md generado por el @po. Crea un architecture.md que defina exclusivamente la arquitectura del sistema. El documento debe incluir:
+- Estilo arquitectónico: Arquitectura Hexagonal (Ports &amp; Adapters) con .NET.
+- Capas y proyectos: nombre de cada proyecto, tipo (classlib / webapi / xunit) y dependencias entre ellos.
+- Convenciones de nomenclatura para namespaces, clases, interfaces y métodos.
+- Patrones a aplicar: repositorio, inyección de dependencias, casos de uso como servicios.
+- Restricciones técnicas: persistencia en memoria (List&lt;T&gt;), sin base de datos real, sin frontend, API REST con Minimal APIs, pruebas con xUnit, separar en distintos proyectos las pruebas unitarias y las pruebas de integración.
+No incluyas tareas de implementación ni desglose por Historia de Usuario.
+</code></pre>
+<hr />
+<h3 id="paso-4-desglose-de-tareas-architect-tasksmd">Paso 4: Desglose de Tareas — <code>architect</code> → <code>tasks.md</code></h3>
+<blockquote>
+<p>🟡 <strong>Modo: PLAN primero</strong> → revisa las tareas propuestas → cambia a <strong>ACT</strong> para que escriba el archivo.</p>
+<p>Antes de que el developer implemente, el arquitecto desglosa cada Historia de Usuario en tareas concretas de desarrollo. Esto da al developer instrucciones precisas por HU en lugar de leer todo el plan técnico de una vez.</p>
+</blockquote>
+<pre><code>/architect, lee el backlog.md y el architecture.md. Para cada Historia de Usuario del backlog genera una lista de tareas técnicas de desarrollo en un archivo tasks.md. Cada tarea debe indicar: la capa donde se implementa (Domain / Application / Infrastructure / Presentation), el artefacto a crear o modificar (clase, interfaz, endpoint) y los criterios de aceptación técnicos que debe cumplir. Usa el formato de lista de verificación Markdown (- [ ] tarea).
+</code></pre>
+<hr />
+<h3 id="paso-5-implementacion-developer-construye-el-codigo">Paso 5: Implementación — <code>developer</code> construye el código</h3>
+<blockquote>
+<p>🟢 <strong>Modo: ACT</strong> en todos los sub-pasos. Asegúrate de haber aprobado el <code>tasks.md</code> antes de comenzar.</p>
+</blockquote>
+<h4 id="50-estructura-de-la-solucion">5.0 — Estructura de la solución</h4>
+<p>El primer prompt crea únicamente el esqueleto de proyectos, sin implementar ninguna clase todavía.</p>
+<pre><code>/developer, crea la estructura de la solución .NET de acuerdo al architecture.md. No escribas ninguna clase ni lógica todavía.
+</code></pre>
+<blockquote>
+<p>✅ Verifica que la solución compila correctamente (<code>dotnet build</code>) antes de continuar.</p>
+</blockquote>
+<hr />
+<h4 id="5n-implementacion-tdd-por-historia-de-usuario">5.N — Implementación TDD por Historia de Usuario</h4>
+<p>Por cada HU del <code>tasks.md</code> se sigue el ciclo <strong>Red → Green → Refactor</strong> escenario a escenario. Repite los siguientes <strong>tres prompts</strong> para cada escenario de cada HU.</p>
+<blockquote>
+<p>🟥 <strong>Ciclo TDD:</strong>
+1. <strong>Red</strong> — Escribe la prueba que falla (aún no existe implementación).
+2. 🟢 <strong>Green</strong> — Escribe el mínimo código necesario para que la prueba pase.
+3. 🔵 <strong>Refactor</strong> — Limpia el código sin romper las pruebas. Luego pasa al siguiente escenario.</p>
+</blockquote>
+<hr />
+<p><strong>Prompt A — 🟥 Red: Generar el siguiente criterio de aceptación como prueba fallida</strong></p>
+<pre><code>/developer, analiza el tasks.md. Toma la próxima tarea pendiente (- [ ]) de la HU actual. Escribe únicamente la prueba unitaria en el proyecto de tests que representa ese criterio de aceptación. El nombre del test debe seguir el formato Gherkin: Given_[contexto]_When_[acción]_Then_[resultado]. Usa xUnit y patrón AAA. NO implementes ninguna clase de producción todavía. El test debe compilar pero fallar al ejecutarse.
+</code></pre>
+<blockquote>
+<p>🟥 Ejecuta <code>dotnet test</code> y confirma que el test <strong>falla</strong> antes de continuar.</p>
+</blockquote>
+<hr />
+<p><strong>Prompt B — 🟢 Green: Implementar el mínimo código</strong></p>
+<pre><code>/developer, el test que acabas de escribir está fallando. Escribe el mínimo código de producción necesario para que únicamente ese test pase, respetando la capa que corresponde según el tasks.md. No agregues lógica extra ni anticipes otros criterios.
+</code></pre>
+<blockquote>
+<p>🟢 Ejecuta <code>dotnet test</code> y confirma que el test <strong>pasa</strong> antes de continuar.</p>
+</blockquote>
+<hr />
+<p><strong>Prompt C — 🔵 Refactor: Limpiar sin romper</strong></p>
+<pre><code>/developer, revisa el código recién implementado. Refactoriza si hay duplicación, nombres poco claros o violaciones a SOLID. No agregues nueva funcionalidad. Marca la tarea como completada (`- [x]`) en el tasks.md.
+</code></pre>
+<blockquote>
+<p>🔵 Ejecuta <code>dotnet test</code> y confirma que todos los tests siguen <strong>pasando</strong>. Luego repite desde el Prompt A con el siguiente criterio de aceptación.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p>✅ Al completar todos los criterios de una HU, confirma que todas sus tareas están marcadas como <code>[x]</code> en el <code>tasks.md</code> y pasa a la siguiente HU.</p>
+</blockquote>
+<hr />
+<h3 id="paso-6-validacion-po-revisa-el-resultado">Paso 6: Validación — <code>/po</code> revisa el resultado</h3>
+<blockquote>
+<p>🔵 <strong>Modo: PLAN</strong> — El PO solo evalúa. No necesita escribir archivos, únicamente reportar.</p>
+</blockquote>
+<pre><code>/po, revisa el código generado por el /developer y valida que las Historias de Usuario del backlog.md estén implementadas correctamente. Indica cuáles criterios se cumplen y cuáles faltan.
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
