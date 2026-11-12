@@ -12,6 +12,7 @@ nav:
   - Microservice Basics: microservice-basics.md
   - Event driven lab: event-driven-lab.md
   - SDD: sdd.md
+  - Análisis estático (Java): static-code-java.md
 
 plugins:
   - search
