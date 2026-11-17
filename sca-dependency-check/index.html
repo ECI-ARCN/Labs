@@ -1,0 +1,1922 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Iván Sanchez">
+      
+      
+      
+        <link rel="prev" href="../static-code-java/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Análisis de dependencias (SCA) - ARCN - Hands on Labs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#analisis-de-dependencias-sca-con-owasp-dependency-check" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ARCN - Hands on Labs" class="md-header__button md-logo" aria-label="ARCN - Hands on Labs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ARCN - Hands on Labs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Análisis de dependencias (SCA)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ARCN - Hands on Labs" class="md-nav__button md-logo" aria-label="ARCN - Hands on Labs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ARCN - Hands on Labs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOLID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tdd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TDD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bdd-part1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BDD Parte 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bdd-part2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BDD Parte 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ddd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DDD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../microservice-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microservice Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event-driven-lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event driven lab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../static-code-java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis estático (Java)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis de dependencias (SCA)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis de dependencias (SCA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-conceptos-minimos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Conceptos Mínimos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-preparacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Preparación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Preparación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solicitar-la-api-key-de-la-nvd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solicitar la API Key de la NVD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guardar-la-key-como-secreto-de-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guardar la Key como Secreto de Actions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guardar-la-key-como-secreto-de-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guardar la Key como Secreto de Codespaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iniciar-la-descarga-de-la-base-de-datos-ahora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Iniciar la Descarga de la Base de Datos Ahora
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-ejecucion-en-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Ejecución en Codespaces
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Ejecución en Codespaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agregar-el-plugin-al-pomxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agregar el Plugin al pom.xml
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejecutar-el-analisis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejecutar el Análisis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abrir-el-reporte-html" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abrir el Reporte HTML
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leer-el-reporte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leer el Reporte
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-pipeline-de-github-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Pipeline de GitHub Actions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Pipeline de GitHub Actions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#actualizar-el-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actualizar el Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publicar-y-verificar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publicar y Verificar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ejercicio-practico-introducir-y-remediar-una-dependencia-vulnerable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Ejercicio Práctico: Introducir y Remediar una Dependencia Vulnerable
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Ejercicio Práctico: Introducir y Remediar una Dependencia Vulnerable">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-rama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la Rama
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agregar-la-dependencia-vulnerable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agregar la Dependencia Vulnerable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probar-en-el-codespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probar en el Codespace
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abrir-el-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abrir el Pull Request
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observar-los-resultados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observar los Resultados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remediar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remediar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-falsos-positivos-y-supresiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Falsos Positivos y Supresiones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Falsos Positivos y Supresiones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-el-archivo-de-supresion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear el Archivo de Supresión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activar-el-archivo-en-el-pomxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Activar el Archivo en el pom.xml
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejercicio-suprimir-con-criterio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicio: Suprimir con Criterio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#riesgos-de-suprimir-sin-criterio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Riesgos de Suprimir sin Criterio
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cierre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Cierre
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Cierre">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-de-reflexion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas de Reflexión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problemas-frecuentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problemas Frecuentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reto-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reto Opcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-conceptos-minimos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Conceptos Mínimos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-preparacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Preparación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Preparación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solicitar-la-api-key-de-la-nvd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solicitar la API Key de la NVD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guardar-la-key-como-secreto-de-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guardar la Key como Secreto de Actions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guardar-la-key-como-secreto-de-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guardar la Key como Secreto de Codespaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iniciar-la-descarga-de-la-base-de-datos-ahora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Iniciar la Descarga de la Base de Datos Ahora
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-ejecucion-en-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Ejecución en Codespaces
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Ejecución en Codespaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agregar-el-plugin-al-pomxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agregar el Plugin al pom.xml
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejecutar-el-analisis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejecutar el Análisis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abrir-el-reporte-html" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abrir el Reporte HTML
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leer-el-reporte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leer el Reporte
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-pipeline-de-github-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Pipeline de GitHub Actions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Pipeline de GitHub Actions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#actualizar-el-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actualizar el Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publicar-y-verificar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publicar y Verificar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ejercicio-practico-introducir-y-remediar-una-dependencia-vulnerable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Ejercicio Práctico: Introducir y Remediar una Dependencia Vulnerable
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Ejercicio Práctico: Introducir y Remediar una Dependencia Vulnerable">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-rama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la Rama
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agregar-la-dependencia-vulnerable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agregar la Dependencia Vulnerable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probar-en-el-codespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probar en el Codespace
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abrir-el-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abrir el Pull Request
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observar-los-resultados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observar los Resultados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remediar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remediar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-falsos-positivos-y-supresiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Falsos Positivos y Supresiones
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Falsos Positivos y Supresiones">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-el-archivo-de-supresion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear el Archivo de Supresión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activar-el-archivo-en-el-pomxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Activar el Archivo en el pom.xml
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejercicio-suprimir-con-criterio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejercicio: Suprimir con Criterio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#riesgos-de-suprimir-sin-criterio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Riesgos de Suprimir sin Criterio
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cierre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Cierre
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Cierre">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-de-reflexion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas de Reflexión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problemas-frecuentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problemas Frecuentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reto-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reto Opcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="analisis-de-dependencias-sca-con-owasp-dependency-check">Análisis de Dependencias (SCA) con OWASP Dependency-Check</h1>
+<p><strong>Duración estimada:</strong> 2 horas (la primera descarga de la base de datos de la NVD toma buena parte de la sesión).</p>
+<p><strong>Prerrequisitos:</strong></p>
+<ul>
+<li>Haber completado el laboratorio <a href="../static-code-java/">Análisis estático (Java)</a>: fork público de <code>spring-petclinic</code>, <code>devcontainer.json</code> con Java 21 y el workflow <code>.github/workflows/sonarqube-analysis.yml</code> funcionando.</li>
+<li>Cuenta de GitHub con acceso a Codespaces.</li>
+<li>Una dirección de correo para recibir la API key de la NVD.</li>
+</ul>
+<p><strong>Qué vas a construir:</strong> un segundo job en el workflow existente que revisa las librerías de PetClinic contra la base de datos pública de vulnerabilidades, publica los hallazgos en la pestaña <strong>Security</strong> de GitHub y falla cuando encuentra una vulnerabilidad grave.</p>
+<hr />
+<h2 id="1-conceptos-minimos"><strong>1. Conceptos Mínimos</strong></h2>
+<ul>
+<li><strong>SCA (Software Composition Analysis):</strong> analiza las librerías de terceros que usa tu proyecto, no tu código. Responde: ¿alguna de mis dependencias tiene vulnerabilidades conocidas?</li>
+<li><strong>CVE (Common Vulnerabilities and Exposures):</strong> identificador único de una vulnerabilidad publicada, por ejemplo <code>CVE-2022-42889</code>.</li>
+<li><strong>CPE (Common Platform Enumeration):</strong> nombre estandarizado de un producto y su versión, por ejemplo <code>cpe:2.3:a:apache:commons_text:1.9</code>. Las vulnerabilidades de la NVD se asocian a CPE, no a coordenadas Maven.</li>
+<li><strong>CVSS (Common Vulnerability Scoring System):</strong> puntaje de gravedad de 0 a 10. De 7.0 a 8.9 es <em>High</em>; de 9.0 a 10, <em>Critical</em>.</li>
+<li><strong>NVD (National Vulnerability Database):</strong> base de datos del NIST que publica los CVE con sus CPE y puntajes CVSS. Es la fuente principal de Dependency-Check.</li>
+</ul>
+<p><strong>Dependencias transitivas.</strong> PetClinic declara unas 20 dependencias en su <code>pom.xml</code>, pero el build descarga más de 100: las librerías de tus librerías. Una vulnerabilidad en cualquiera de ellas también es tuya, aunque nunca la hayas declarado. Para verlas todas:</p>
+<pre><code class="language-bash">./mvnw dependency:tree
+</code></pre>
+<p><strong>¿Cómo funciona Dependency-Check?</strong> Por cada JAR reúne <em>evidencia</em> (nombre del archivo, manifiesto, <code>pom.properties</code>), deduce el CPE más probable y busca los CVE asociados. Como el CPE se deduce, puede equivocarse: de ahí los falsos positivos de la sección 6.</p>
+<blockquote>
+<p><strong>SAST frente a SCA.</strong> El laboratorio anterior fue <strong>SAST</strong> (<em>Static Application Security Testing</em>): SonarQube Cloud leyó <em>tu</em> código fuente en busca de defectos. Este laboratorio es <strong>SCA</strong>: no lee tu código, compara las versiones de <em>tus dependencias</em> con una lista de vulnerabilidades publicadas. Son complementarios: un código impecable puede ser vulnerable por una librería, y una librería al día no corrige un error tuyo.</p>
+</blockquote>
+<hr />
+<h2 id="2-preparacion"><strong>2. Preparación</strong></h2>
+<h3 id="solicitar-la-api-key-de-la-nvd">Solicitar la API Key de la NVD</h3>
+<ol>
+<li>Abre <a href="https://nvd.nist.gov/developers/request-an-api-key">https://nvd.nist.gov/developers/request-an-api-key</a>.</li>
+<li>Completa el formulario con tu organización, tu correo y el tipo de organización.</li>
+<li>Abre el correo que recibes y activa la key con el enlace (caduca si no la activas a tiempo).</li>
+<li>Copia la key: la necesitas en los dos pasos siguientes.</li>
+</ol>
+<p>Sin key, la NVD limita tanto las peticiones que la descarga inicial puede tardar horas.</p>
+<h3 id="guardar-la-key-como-secreto-de-actions">Guardar la Key como Secreto de Actions</h3>
+<ol>
+<li>En tu fork: <strong>Settings &gt; Secrets and variables &gt; Actions &gt; New repository secret</strong>.</li>
+<li>Nombre: <code>NVD_API_KEY</code>. Valor: la key.</li>
+</ol>
+<h3 id="guardar-la-key-como-secreto-de-codespaces">Guardar la Key como Secreto de Codespaces</h3>
+<ol>
+<li>En GitHub, ve a tu perfil: <strong>Settings &gt; Codespaces &gt; Codespaces secrets &gt; New secret</strong>.</li>
+<li>Nombre: <code>NVD_API_KEY</code>. Valor: la key.</li>
+<li>En <strong>Repository access</strong>, selecciona <code>TU_USUARIO_GITHUB/spring-petclinic</code>.</li>
+<li>Si el Codespace ya estaba abierto, recárgalo: en la paleta de comandos, ejecuta <strong>Codespaces: Rebuild Container</strong>. Los secretos solo se inyectan al iniciar el contenedor.</li>
+<li>Verifica en la terminal que la variable existe, sin imprimir su valor:</li>
+</ol>
+<pre><code class="language-bash">[ -n &quot;$NVD_API_KEY&quot; ] &amp;&amp; echo &quot;NVD_API_KEY disponible&quot; || echo &quot;NVD_API_KEY NO disponible&quot;
+</code></pre>
+<blockquote>
+<p><strong>La key nunca va en el <code>pom.xml</code> ni en ningún archivo versionado.</strong> El plugin lee el <em>nombre</em> de la variable de entorno (<code>NVD_API_KEY</code>) desde el <code>pom.xml</code>; el <em>valor</em> llega desde el secreto. Así puedes publicar el repositorio sin exponer la key, como hiciste con <code>SONAR_TOKEN</code>.</p>
+</blockquote>
+<h3 id="iniciar-la-descarga-de-la-base-de-datos-ahora">Iniciar la Descarga de la Base de Datos Ahora</h3>
+<p>La primera descarga de la NVD tarda varios minutos (a menudo 10 a 30), incluso con key. Lánzala ya, en una terminal aparte, y continúa leyendo mientras termina:</p>
+<pre><code class="language-bash">./mvnw -B org.owasp:dependency-check-maven:13.0.0:update-only \
+  -DnvdApiKeyEnvironmentVariable=NVD_API_KEY \
+  -DdataDirectory=$HOME/.dependency-check-data
+</code></pre>
+<p>La base queda en <code>~/.dependency-check-data</code> y las siguientes ejecuciones solo descargan los cambios.</p>
+<p><strong>Valores a reemplazar en esta sección:</strong></p>
+<ul>
+<li><code>TU_USUARIO_GITHUB</code>: tu usuario de GitHub, dueño del fork.</li>
+</ul>
+<hr />
+<h2 id="3-ejecucion-en-codespaces"><strong>3. Ejecución en Codespaces</strong></h2>
+<h3 id="agregar-el-plugin-al-pomxml">Agregar el Plugin al <code>pom.xml</code></h3>
+<p>Dentro de <code>&lt;build&gt;&lt;plugins&gt;</code> del <code>pom.xml</code> (no dentro de <code>&lt;profiles&gt;</code>), agrega:</p>
+<pre><code class="language-xml">&lt;plugin&gt;
+  &lt;groupId&gt;org.owasp&lt;/groupId&gt;
+  &lt;artifactId&gt;dependency-check-maven&lt;/artifactId&gt;
+  &lt;version&gt;13.0.0&lt;/version&gt;
+  &lt;configuration&gt;
+    &lt;!-- Nombre de la variable de entorno con la key (no la key) --&gt;
+    &lt;nvdApiKeyEnvironmentVariable&gt;NVD_API_KEY&lt;/nvdApiKeyEnvironmentVariable&gt;
+    &lt;!-- Base de datos fuera de ~/.m2 para cachearla por separado --&gt;
+    &lt;dataDirectory&gt;${user.home}/.dependency-check-data&lt;/dataDirectory&gt;
+    &lt;formats&gt;
+      &lt;format&gt;HTML&lt;/format&gt;
+      &lt;format&gt;SARIF&lt;/format&gt;
+    &lt;/formats&gt;
+    &lt;!-- Falla con cualquier vulnerabilidad High o Critical --&gt;
+    &lt;failBuildOnCVSS&gt;7&lt;/failBuildOnCVSS&gt;
+    &lt;!-- OSS Index exige cuenta en Sonatype; se desactiva --&gt;
+    &lt;ossIndexAnalyzerEnabled&gt;false&lt;/ossIndexAnalyzerEnabled&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;
+</code></pre>
+<ul>
+<li><strong>Sin <code>&lt;executions&gt;</code>:</strong> el plugin no se ata a ninguna fase del build. <code>./mvnw verify</code> (y el job de Sonar) no lo ejecuta; solo corre cuando lo invocas con <code>dependency-check:check</code>.</li>
+<li><strong><code>dataDirectory</code>:</strong> por defecto la base vive dentro de <code>~/.m2/repository</code>. Moverla evita que termine dentro de la caché de Maven del workflow, que comparte el job de Sonar.</li>
+<li><strong><code>failBuildOnCVSS</code>:</strong> su valor por defecto es 11, es decir, nunca falla. Con 7, cualquier CVE <em>High</em> o <em>Critical</em> rompe el build.</li>
+</ul>
+<blockquote>
+<p><strong>Sobre OSS Index.</strong> Dependency-Check también consulta Sonatype OSS Index, que ahora exige usuario y token. Se desactiva para no depender de otra cuenta. El costo: se pierde una segunda fuente de vulnerabilidades, así que el análisis queda limitado a la NVD (más el catálogo de vulnerabilidades explotadas de CISA, que el plugin consulta por defecto).</p>
+</blockquote>
+<h3 id="ejecutar-el-analisis">Ejecutar el Análisis</h3>
+<p>Cuando termine la descarga de la sección 2:</p>
+<pre><code class="language-bash">./mvnw -B dependency-check:check
+</code></pre>
+<p>El resultado queda en <code>target/dependency-check-report.html</code> y <code>target/dependency-check-report.sarif</code>.</p>
+<p>Si el build termina en <code>BUILD FAILURE</code> por CVSS, PetClinic ya tiene alguna dependencia con hallazgos de 7 o más. Revisa el reporte antes de seguir: puede ser un falso positivo (sección 6).</p>
+<h3 id="abrir-el-reporte-html">Abrir el Reporte HTML</h3>
+<ol>
+<li>Sirve la carpeta <code>target</code> con el servidor web que trae el JDK:</li>
+</ol>
+<pre><code class="language-bash">jwebserver -d &quot;$PWD/target&quot; -b 0.0.0.0 -p 8000
+</code></pre>
+<ol>
+<li>Codespaces muestra un aviso de puerto reenviado. Haz clic en <strong>Open in Browser</strong> (o ve a la pestaña <strong>Ports</strong> y abre el puerto 8000).</li>
+<li>Abre <code>dependency-check-report.html</code>.</li>
+<li>Detén el servidor con <code>Ctrl+C</code> cuando termines.</li>
+</ol>
+<h3 id="leer-el-reporte">Leer el Reporte</h3>
+<p>El reporte tiene un resumen y, debajo, el detalle de cada dependencia.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Dónde</th>
+<th>Qué significa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dependency</strong></td>
+<td>Resumen</td>
+<td>El archivo JAR analizado (incluye las transitivas).</td>
+</tr>
+<tr>
+<td><strong>Vulnerability IDs</strong></td>
+<td>Resumen y detalle</td>
+<td>El CPE que Dependency-Check le asignó al JAR. Es una deducción.</td>
+</tr>
+<tr>
+<td><strong>Package</strong></td>
+<td>Resumen y detalle</td>
+<td>El identificador <code>pkg:maven/grupo/artefacto@versión</code>.</td>
+</tr>
+<tr>
+<td><strong>Highest Severity</strong></td>
+<td>Resumen</td>
+<td>La severidad más alta de sus CVE.</td>
+</tr>
+<tr>
+<td><strong>CVE Count</strong></td>
+<td>Resumen</td>
+<td>Cuántos CVE se le asociaron.</td>
+</tr>
+<tr>
+<td><strong>Confidence</strong></td>
+<td>Resumen</td>
+<td>Qué tan seguro está de que el CPE es correcto (<em>Low</em> a <em>Highest</em>).</td>
+</tr>
+<tr>
+<td><strong>Evidence</strong></td>
+<td>Detalle</td>
+<td>De dónde sacó el vendor, el producto y la versión: manifiesto, pom, nombre del archivo.</td>
+</tr>
+<tr>
+<td><strong>Published Vulnerabilities</strong></td>
+<td>Detalle</td>
+<td>Cada CVE con su CVSS, su descripción y enlaces a la NVD.</td>
+</tr>
+</tbody>
+</table>
+<p>Para decidir si un hallazgo es real, compara el CPE con la evidencia: si el CPE describe otro producto, o una versión distinta de la que dice el pom, sospecha un falso positivo.</p>
+<hr />
+<h2 id="4-pipeline-de-github-actions"><strong>4. Pipeline de GitHub Actions</strong></h2>
+<blockquote>
+<p><strong>Por qué los resultados van a GitHub y no a SonarQube Cloud.</strong> SonarQube Cloud no admite el plugin comunitario de Dependency-Check que existe para SonarQube Server, y su importación de reportes SARIF no maneja bien los hallazgos de dependencias. En su lugar:</p>
+<ul>
+<li>el reporte <strong>SARIF</strong> se sube a <strong>Security &gt; Code scanning</strong> del repositorio, donde cada CVE queda como alerta con su historial;</li>
+<li>el reporte <strong>HTML</strong> se guarda como <strong>artefacto</strong> de la ejecución, para revisarlo completo.</li>
+</ul>
+<p>SonarQube Cloud sigue a cargo del análisis de tu código (SAST).</p>
+</blockquote>
+<h3 id="actualizar-el-workflow">Actualizar el Workflow</h3>
+<p>Reemplaza el contenido de <code>.github/workflows/sonarqube-analysis.yml</code>. El job <code>sonarqube</code> queda idéntico al del laboratorio anterior; solo se agrega el job <code>dependency-check</code>:</p>
+<pre><code class="language-yaml">name: SonarQube Cloud Analysis
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Cache SonarQube packages
+        uses: actions/cache@v6
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Build, test and analyze
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:5.8.0.7211:sonar
+
+  dependency-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Compute cache date
+        id: date
+        run: echo &quot;today=$(date -u +%Y-%m-%d)&quot; &gt;&gt; &quot;$GITHUB_OUTPUT&quot;
+
+      - name: Restore NVD database
+        uses: actions/cache/restore@v6
+        with:
+          path: ~/.dependency-check-data
+          key: ${{ runner.os }}-nvd-${{ steps.date.outputs.today }}
+          restore-keys: ${{ runner.os }}-nvd-
+
+      - name: Run OWASP Dependency-Check
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: ./mvnw -B dependency-check:check
+
+      - name: Save NVD database
+        if: always()
+        uses: actions/cache/save@v6
+        with:
+          path: ~/.dependency-check-data
+          key: ${{ runner.os }}-nvd-${{ steps.date.outputs.today }}
+
+      - name: Upload SARIF to GitHub Security
+        if: always() &amp;&amp; hashFiles('target/dependency-check-report.sarif') != ''
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: target/dependency-check-report.sarif
+          category: dependency-check
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: dependency-check-report
+          path: target/dependency-check-report.html
+</code></pre>
+<p>Qué hace cada parte del nuevo job:</p>
+<ul>
+<li><strong>Job separado:</strong> corre en paralelo con el de Sonar. Si Dependency-Check falla, el análisis de Sonar sigue publicándose.</li>
+<li><strong><code>permissions</code>:</strong> <code>security-events: write</code> permite subir el SARIF. Se declara solo en este job, así que el job de Sonar no cambia.</li>
+<li><strong>Caché de la NVD en dos pasos (<code>restore</code> y <code>save</code>):</strong> la acción <code>actions/cache</code> normal solo guarda la caché si el job termina bien. Como este job falla a propósito cuando encuentra un CVSS alto, se separa la restauración del guardado, y el guardado lleva <code>if: always()</code>.</li>
+<li><strong>Clave por día:</strong> <code>restore-keys</code> recupera la base más reciente y el guardado crea, como máximo, una entrada nueva por día. Si ya existe la del día, el paso avisa que la clave existe y no hace nada.</li>
+<li><strong><code>if: always()</code> en las subidas:</strong> el reporte se sube aunque el paso anterior haya fallado por el umbral, que es justo cuando más lo necesitas. La condición <code>hashFiles</code> evita un segundo error confuso si el análisis falló antes de generar el SARIF.</li>
+</ul>
+<h3 id="publicar-y-verificar">Publicar y Verificar</h3>
+<pre><code class="language-bash">git add pom.xml .github/workflows/sonarqube-analysis.yml
+git commit -m &quot;ci: add OWASP Dependency-Check job&quot;
+git push origin main
+</code></pre>
+<ol>
+<li>En <strong>Actions</strong>, abre la ejecución: deben aparecer los dos jobs, <code>sonarqube</code> y <code>dependency-check</code>.</li>
+<li>La primera ejecución de <code>dependency-check</code> tarda porque descarga la NVD completa. Las siguientes restauran la caché y tardan pocos minutos.</li>
+<li>Cuando termine, revisa:<ul>
+<li><strong>Security &gt; Code scanning:</strong> las alertas de la herramienta <em>dependency-check</em>, si las hay.</li>
+<li><strong>Summary &gt; Artifacts:</strong> el archivo <code>dependency-check-report</code> con el HTML.</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p><strong>Verificar:</strong> si <code>main</code> ya falla por CVSS, revisa los hallazgos antes del ejercicio. Si son falsos positivos, adelanta la sección 6; si son reales, actualiza la dependencia afectada.</p>
+</blockquote>
+<hr />
+<h2 id="5-ejercicio-practico-introducir-y-remediar-una-dependencia-vulnerable"><strong>5. Ejercicio Práctico: Introducir y Remediar una Dependencia Vulnerable</strong></h2>
+<h3 id="crear-la-rama">Crear la Rama</h3>
+<pre><code class="language-bash">git checkout main
+git pull
+git checkout -b lab/dependencia-vulnerable
+</code></pre>
+<h3 id="agregar-la-dependencia-vulnerable">Agregar la Dependencia Vulnerable</h3>
+<p>Dentro de <code>&lt;dependencies&gt;</code> del <code>pom.xml</code>, agrega:</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+  &lt;artifactId&gt;commons-text&lt;/artifactId&gt;
+  &lt;version&gt;1.9&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p><strong>CVE esperado:</strong></p>
+<table>
+<thead>
+<tr>
+<th>CVE</th>
+<th>Nombre</th>
+<th>CVSS 3.1 (NVD)</th>
+<th>Versiones afectadas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CVE-2022-42889</code></td>
+<td><em>Text4Shell</em>: ejecución remota de código mediante interpolación de variables en <code>StringSubstitutor</code></td>
+<td><strong>9.8 Critical</strong></td>
+<td>1.5 a 1.9 (corregido en 1.10.0)</td>
+</tr>
+</tbody>
+</table>
+<p>Datos consultados en la NVD. La NVD puede reclasificar o agregar CVE con el tiempo; compáralos con tu reporte.</p>
+<blockquote>
+<p><strong>¿Por qué no log4j-core o jackson-databind?</strong> Spring Boot controla las versiones de log4j y Jackson y los usa en su configuración de logging y JSON. Forzar una versión antigua puede romper el arranque o las pruebas de PetClinic y desviar el ejercicio. <code>commons-text</code> es independiente: el build sigue en verde y solo cambia el resultado del análisis.</p>
+</blockquote>
+<h3 id="probar-en-el-codespace">Probar en el Codespace</h3>
+<pre><code class="language-bash">./mvnw -B dependency-check:check
+</code></pre>
+<p>Debe terminar en <code>BUILD FAILURE</code> con un mensaje que menciona el umbral de CVSS 7 y <code>CVE-2022-42889</code>. Abre el reporte HTML (sección 3) y localiza <code>commons-text-1.9.jar</code>: revisa su CPE, su evidencia y el CVE.</p>
+<p>Fíjate también en <code>commons-lang3</code>, dependencia de <code>commons-text</code>: su versión la impone Spring Boot y no la que pide <code>commons-text</code> 1.9. Así se resuelven las transitivas en Maven.</p>
+<h3 id="abrir-el-pull-request">Abrir el Pull Request</h3>
+<pre><code class="language-bash">git add pom.xml
+git commit -m &quot;feat: add commons-text&quot;
+git push origin lab/dependencia-vulnerable
+</code></pre>
+<ol>
+<li>En tu fork, haz clic en <strong>Compare &amp; pull request</strong>.</li>
+<li>Cambia el repositorio base a <code>TU_USUARIO_GITHUB/spring-petclinic</code>, rama <code>main</code>. Un PR hacia <code>spring-projects/spring-petclinic</code> no recibe tus secretos.</li>
+<li>Crea el pull request.</li>
+</ol>
+<h3 id="observar-los-resultados">Observar los Resultados</h3>
+<ol>
+<li>En la pestaña <strong>Checks</strong> del PR, el job <code>dependency-check</code> aparece en rojo y el de Sonar en verde: el código no cambió, solo las dependencias.</li>
+<li>Abre el log del paso <strong>Run OWASP Dependency-Check</strong> y localiza el mensaje del umbral.</li>
+<li>Confirma que los pasos de subida se ejecutaron pese al fallo.</li>
+<li>Revisa los hallazgos:<ul>
+<li>En el PR, el check <strong>Code scanning results / dependency-check</strong> muestra las alertas nuevas.</li>
+<li>En <strong>Security &gt; Code scanning</strong>, filtra por la rama del PR (<code>branch:lab/dependencia-vulnerable</code> o con el menú <strong>Branch</strong>).</li>
+<li>En <strong>Summary &gt; Artifacts</strong>, descarga el HTML y búscalo ahí.</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p><strong>Verificar:</strong> la forma exacta en que GitHub muestra las alertas en el PR (check aparte, comentario o anotación en <code>pom.xml</code>) depende de cómo ubica cada resultado del SARIF. Si no las ves en el PR, búscalas en <strong>Security &gt; Code scanning</strong> filtrando por la rama.</p>
+</blockquote>
+<h3 id="remediar">Remediar</h3>
+<p>Cambia la versión a la vigente:</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+  &lt;artifactId&gt;commons-text&lt;/artifactId&gt;
+  &lt;version&gt;1.15.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<pre><code class="language-bash">./mvnw -B dependency-check:check
+git add pom.xml
+git commit -m &quot;fix: upgrade commons-text to 1.15.0 (CVE-2022-42889)&quot;
+git push origin lab/dependencia-vulnerable
+</code></pre>
+<ol>
+<li>Confirma que el comando local termina en <code>BUILD SUCCESS</code>.</li>
+<li>En el PR, el job <code>dependency-check</code> debe pasar a verde.</li>
+<li>En <strong>Security &gt; Code scanning</strong>, la alerta de <code>CVE-2022-42889</code> aparece como <strong>Fixed</strong> en la rama.</li>
+<li>Cierra el PR sin hacer merge: PetClinic no usa <code>commons-text</code>, y una dependencia sin uso solo suma superficie de ataque.</li>
+</ol>
+<p><strong>Valores a reemplazar en esta sección:</strong></p>
+<ul>
+<li><code>TU_USUARIO_GITHUB</code>: tu usuario de GitHub, dueño del fork.</li>
+</ul>
+<hr />
+<h2 id="6-falsos-positivos-y-supresiones"><strong>6. Falsos Positivos y Supresiones</strong></h2>
+<p>Un <strong>falso positivo</strong> ocurre cuando Dependency-Check asigna a un JAR un CPE equivocado, por ejemplo uno de otro producto con nombre parecido, y le atribuye CVE que no le corresponden. La herramienta deja <em>suprimirlos</em> con un archivo XML versionado junto al código.</p>
+<h3 id="crear-el-archivo-de-supresion">Crear el Archivo de Supresión</h3>
+<p>En la raíz del repositorio, crea <code>dependency-check-suppression.xml</code>:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;suppressions xmlns=&quot;https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.4.xsd&quot;&gt;
+
+  &lt;!--
+    Motivo: MOTIVO_DE_LA_SUPRESION
+    Evidencia: EVIDENCIA_REVISADA
+    Revisado por: TU_USUARIO_GITHUB
+    Fecha de revisión: FECHA_REVISION
+  --&gt;
+  &lt;suppress until=&quot;FECHA_VENCIMIENTO&quot;&gt;
+    &lt;notes&gt;&lt;![CDATA[
+      MOTIVO_DE_LA_SUPRESION
+    ]]&gt;&lt;/notes&gt;
+    &lt;packageUrl regex=&quot;true&quot;&gt;^pkg:maven/GRUPO_ESCAPADO/ARTEFACTO@.*$&lt;/packageUrl&gt;
+    &lt;vulnerabilityName&gt;CVE_A_SUPRIMIR&lt;/vulnerabilityName&gt;
+  &lt;/suppress&gt;
+
+&lt;/suppressions&gt;
+</code></pre>
+<ul>
+<li><strong><code>packageUrl</code>:</strong> a qué dependencia aplica. Cópialo del campo <strong>Package</strong> del reporte HTML. Los puntos del grupo se escapan con <code>\.</code>.</li>
+<li><strong><code>vulnerabilityName</code>:</strong> suprime solo ese CVE. Para un CPE equivocado completo, usa <code>&lt;cpe&gt;</code> en lugar de <code>&lt;vulnerabilityName&gt;</code>.</li>
+<li><strong><code>until</code>:</strong> fecha en formato <code>AAAA-MM-DDZ</code> desde la cual la supresión deja de aplicar y el hallazgo vuelve a aparecer. Obliga a revisarla de nuevo.</li>
+<li><strong>El reporte HTML ayuda:</strong> junto a cada CPE y CVE hay un botón <strong>suppress</strong> que genera el bloque XML para copiar.</li>
+</ul>
+<h3 id="activar-el-archivo-en-el-pomxml">Activar el Archivo en el <code>pom.xml</code></h3>
+<p>Agrega <code>suppressionFiles</code> dentro del <code>&lt;configuration&gt;</code> del plugin. El bloque completo queda así:</p>
+<pre><code class="language-xml">&lt;plugin&gt;
+  &lt;groupId&gt;org.owasp&lt;/groupId&gt;
+  &lt;artifactId&gt;dependency-check-maven&lt;/artifactId&gt;
+  &lt;version&gt;13.0.0&lt;/version&gt;
+  &lt;configuration&gt;
+    &lt;nvdApiKeyEnvironmentVariable&gt;NVD_API_KEY&lt;/nvdApiKeyEnvironmentVariable&gt;
+    &lt;dataDirectory&gt;${user.home}/.dependency-check-data&lt;/dataDirectory&gt;
+    &lt;formats&gt;
+      &lt;format&gt;HTML&lt;/format&gt;
+      &lt;format&gt;SARIF&lt;/format&gt;
+    &lt;/formats&gt;
+    &lt;failBuildOnCVSS&gt;7&lt;/failBuildOnCVSS&gt;
+    &lt;ossIndexAnalyzerEnabled&gt;false&lt;/ossIndexAnalyzerEnabled&gt;
+    &lt;suppressionFiles&gt;
+      &lt;suppressionFile&gt;${project.basedir}/dependency-check-suppression.xml&lt;/suppressionFile&gt;
+    &lt;/suppressionFiles&gt;
+  &lt;/configuration&gt;
+&lt;/plugin&gt;
+</code></pre>
+<h3 id="ejercicio-suprimir-con-criterio">Ejercicio: Suprimir con Criterio</h3>
+<ol>
+<li>Revisa el reporte de <code>main</code> y elige un hallazgo cuyo CPE no coincida con la evidencia del JAR (otro producto u otra versión).</li>
+<li>Si el reporte de <code>main</code> no tiene ninguno, practica con <code>CVE-2022-42889</code> en una rama nueva con <code>commons-text</code> 1.9, sabiendo que <strong>no es un falso positivo</strong>. Escribe como motivo una aceptación temporal de riesgo, por ejemplo: <em>"El proyecto no invoca <code>StringSubstitutor</code> con entrada externa; aceptado hasta migrar"</em>.</li>
+<li>Completa el archivo y ejecuta <code>./mvnw -B dependency-check:check</code>. El hallazgo debe aparecer en la sección <strong>Suppressed Vulnerabilities</strong> del HTML y el build debe pasar.</li>
+<li>Si usaste <code>commons-text</code>, <strong>no hagas merge</strong>: cierra el PR y borra la rama.</li>
+</ol>
+<p>Ejemplo completo para el caso de <code>commons-text</code>:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;suppressions xmlns=&quot;https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.4.xsd&quot;&gt;
+
+  &lt;!--
+    Motivo: aceptación temporal de riesgo, no es falso positivo.
+    Evidencia: el proyecto no invoca StringSubstitutor.createInterpolator()
+    con entrada externa (búsqueda en el código: sin usos).
+    Revisado por: TU_USUARIO_GITHUB
+    Fecha de revisión: FECHA_REVISION
+  --&gt;
+  &lt;suppress until=&quot;FECHA_VENCIMIENTO&quot;&gt;
+    &lt;notes&gt;&lt;![CDATA[
+      Text4Shell: aceptado temporalmente; el proyecto no usa interpolación
+      con entrada externa. Remediar actualizando a commons-text &gt;= 1.10.0.
+    ]]&gt;&lt;/notes&gt;
+    &lt;packageUrl regex=&quot;true&quot;&gt;^pkg:maven/org\.apache\.commons/commons-text@.*$&lt;/packageUrl&gt;
+    &lt;vulnerabilityName&gt;CVE-2022-42889&lt;/vulnerabilityName&gt;
+  &lt;/suppress&gt;
+
+&lt;/suppressions&gt;
+</code></pre>
+<h3 id="riesgos-de-suprimir-sin-criterio">Riesgos de Suprimir sin Criterio</h3>
+<ul>
+<li><strong>Una supresión oculta el hallazgo para siempre.</strong> Si la regla es amplia (<code>regex</code> que cubre todas las versiones, o un <code>&lt;cpe&gt;</code> genérico), también ocultará los CVE futuros de esa librería.</li>
+<li><strong>Un "falso positivo" puede no serlo.</strong> Que hoy no uses la función vulnerable no significa que mañana alguien no la use.</li>
+<li><strong>El build verde da falsa tranquilidad.</strong> El pipeline pasa, nadie mira el reporte y la vulnerabilidad llega a producción.</li>
+<li><strong>Buenas prácticas:</strong><ul>
+<li>una supresión por CVE y dependencia;</li>
+<li>motivo y evidencia en el comentario;</li>
+<li>fecha de vencimiento (<code>until</code>);</li>
+<li>revisión en el pull request como cualquier otro cambio de código.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Valores a reemplazar en esta sección:</strong></p>
+<ul>
+<li><code>MOTIVO_DE_LA_SUPRESION</code>: por qué el hallazgo no aplica o se acepta temporalmente.</li>
+<li><code>EVIDENCIA_REVISADA</code>: qué revisaste (CPE frente a la evidencia del JAR, búsqueda de usos en el código).</li>
+<li><code>TU_USUARIO_GITHUB</code>: tu usuario de GitHub.</li>
+<li><code>FECHA_REVISION</code>: fecha de hoy, en formato <code>AAAA-MM-DD</code>.</li>
+<li><code>FECHA_VENCIMIENTO</code>: fecha límite de la supresión, en formato <code>AAAA-MM-DDZ</code> (por ejemplo, en 3 meses).</li>
+<li><code>GRUPO_ESCAPADO</code>: el groupId con los puntos escapados (<code>org\.example</code>).</li>
+<li><code>ARTEFACTO</code>: el artifactId.</li>
+<li><code>CVE_A_SUPRIMIR</code>: el identificador del CVE (<code>CVE-AAAA-NNNNN</code>).</li>
+</ul>
+<hr />
+<h2 id="7-cierre"><strong>7. Cierre</strong></h2>
+<h3 id="preguntas-de-reflexion">Preguntas de Reflexión</h3>
+<ol>
+<li>Este laboratorio usó <code>failBuildOnCVSS</code> en 7. ¿Qué umbral usarías en un equipo real? ¿Debería ser el mismo para una rama de desarrollo que para un release a producción?</li>
+<li>Dependabot también avisa de dependencias vulnerables y abre PRs de actualización. ¿Qué aporta Dependency-Check que Dependabot no aporte, y viceversa? ¿Usarías los dos?</li>
+<li>Un CVE con CVSS 9.8 en una librería que tu código nunca invoca, ¿es urgente? ¿Qué información adicional necesitas para decidirlo?</li>
+<li>¿Quién debería aprobar un cambio en <code>dependency-check-suppression.xml</code>? ¿Qué controles pondrías para que no se convierta en una forma de "apagar" el pipeline?</li>
+</ol>
+<h3 id="problemas-frecuentes">Problemas Frecuentes</h3>
+<table>
+<thead>
+<tr>
+<th>Síntoma</th>
+<th>Causa y solución</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NVD Returned Status Code: 403</code></td>
+<td>La key no llegó o no está activada. Revisa el secreto <code>NVD_API_KEY</code> (en Actions y en Codespaces) y que hayas hecho clic en el enlace de activación. En Codespaces, reconstruye el contenedor después de crear el secreto.</td>
+</tr>
+<tr>
+<td>La descarga de la NVD tarda mucho o falla con <code>429</code> / <code>503</code></td>
+<td>La NVD limita peticiones y a veces está saturada. Vuelve a ejecutar más tarde; la descarga continúa desde donde quedó. Si persiste, agrega <code>&lt;nvdApiDelay&gt;8000&lt;/nvdApiDelay&gt;</code> en la configuración del plugin.</td>
+</tr>
+<tr>
+<td>Cada ejecución del workflow descarga la NVD completa</td>
+<td>La caché está vacía o no se guarda. Revisa en el log que <strong>Save NVD database</strong> se ejecute y que <strong>Restore NVD database</strong> muestre <code>Cache restored</code>. Las cachés de un PR no se comparten con otros PR: la de <code>main</code> sí está disponible para todos.</td>
+</tr>
+<tr>
+<td>Errores raros de base de datos tras un fallo</td>
+<td>La caché quedó con una base dañada. Bórrala en <strong>Actions &gt; Caches</strong> (las que empiezan por <code>Linux-nvd-</code>) y vuelve a ejecutar.</td>
+</tr>
+<tr>
+<td>El SARIF no aparece en <strong>Security</strong></td>
+<td>Falta <code>security-events: write</code> en el job, el paso de subida se saltó porque no se generó el archivo, o la ejecución vino de un PR hacia el repositorio original. Revisa el log del paso <strong>Upload SARIF to GitHub Security</strong>.</td>
+</tr>
+<tr>
+<td><code>Resource not accessible by integration</code> al subir el SARIF</td>
+<td>El job no tiene el permiso <code>security-events: write</code>.</td>
+</tr>
+<tr>
+<td>Advertencias o errores de <strong>OSS Index</strong> (<code>401</code>, credenciales)</td>
+<td>El analizador sigue activo. Confirma <code>&lt;ossIndexAnalyzerEnabled&gt;false&lt;/ossIndexAnalyzerEnabled&gt;</code> en el plugin.</td>
+</tr>
+<tr>
+<td><code>Unable to load suppression file</code></td>
+<td>La ruta en <code>suppressionFiles</code> no coincide con el archivo, o el XML está mal formado. Valida el XML y la ruta <code>${project.basedir}/dependency-check-suppression.xml</code>.</td>
+</tr>
+<tr>
+<td>El job de Sonar dejó de funcionar</td>
+<td>El cambio de workflow tocó ese job. Compáralo con el del laboratorio anterior: debe quedar idéntico.</td>
+</tr>
+<tr>
+<td><code>./mvnw verify</code> ejecuta Dependency-Check</td>
+<td>Se agregó un bloque <code>&lt;executions&gt;</code> al plugin. Quítalo: el análisis se invoca solo con <code>dependency-check:check</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reto-opcional">Reto Opcional</h3>
+<ul>
+<li>Activa <strong>Dependabot alerts</strong> y <strong>Dependabot security updates</strong> en <strong>Settings &gt; Advanced Security</strong> y compara sus alertas con las de Dependency-Check sobre la misma rama vulnerable.</li>
+<li>Protege <code>main</code> para exigir el check <code>dependency-check</code> antes del merge.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

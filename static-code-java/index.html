@@ -1,0 +1,1976 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Iván Sanchez">
+      
+      
+      
+        <link rel="prev" href="../sdd/">
+      
+      
+        <link rel="next" href="../sca-dependency-check/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Análisis estático (Java) - ARCN - Hands on Labs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#analisis-estatico-de-codigo-en-java-con-sonarqube-cloud" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ARCN - Hands on Labs" class="md-header__button md-logo" aria-label="ARCN - Hands on Labs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ARCN - Hands on Labs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Análisis estático (Java)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ARCN - Hands on Labs" class="md-nav__button md-logo" aria-label="ARCN - Hands on Labs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ARCN - Hands on Labs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SOLID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tdd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TDD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bdd-part1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BDD Parte 1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bdd-part2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BDD Parte 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ddd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DDD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../microservice-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microservice Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event-driven-lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Event driven lab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis estático (Java)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis estático (Java)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-preparar-el-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Preparar el Repositorio
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Preparar el Repositorio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hacer-el-fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hacer el Fork
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configurar-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configurar Codespaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abrir-el-codespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abrir el Codespace
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revisar-gitignore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Revisar .gitignore
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-configurar-sonarqube-cloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Configurar SonarQube Cloud
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Configurar SonarQube Cloud">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-organizacion-y-el-proyecto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la Organización y el Proyecto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desactivar-el-automatic-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Desactivar el Automatic Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generar-el-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generar el Token
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guardar-el-token-como-secreto-en-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guardar el Token como Secreto en GitHub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agregar-la-configuracion-al-pomxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agregar la Configuración al pom.xml
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-configurar-el-pipeline-de-github-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Configurar el Pipeline de GitHub Actions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Configurar el Pipeline de GitHub Actions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-el-archivo-de-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear el Archivo de Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publicar-y-verificar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publicar y Verificar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ejercicio-practico-introducir-y-corregir-defectos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Ejercicio Práctico: Introducir y Corregir Defectos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Ejercicio Práctico: Introducir y Corregir Defectos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-rama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la Rama
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agregar-la-clase-con-defectos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agregar la Clase con Defectos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dar-formato-y-publicar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dar Formato y Publicar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abrir-el-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abrir el Pull Request
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observar-los-hallazgos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observar los Hallazgos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#corregir-los-defectos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Corregir los Defectos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agregar-pruebas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agregar Pruebas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificar-que-el-quality-gate-pase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificar que el Quality Gate Pase
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-interpretar-los-resultados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Interpretar los Resultados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Interpretar los Resultados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mirar-en-el-tablero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué Mirar en el Tablero
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codigo-nuevo-y-codigo-total" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Código Nuevo y Código Total
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-es-el-quality-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué es el Quality Gate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-cierre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Cierre
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Cierre">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-de-reflexion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas de Reflexión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problemas-frecuentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problemas Frecuentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reto-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reto Opcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sca-dependency-check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis de dependencias (SCA)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-preparar-el-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Preparar el Repositorio
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Preparar el Repositorio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hacer-el-fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hacer el Fork
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configurar-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configurar Codespaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abrir-el-codespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abrir el Codespace
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revisar-gitignore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Revisar .gitignore
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-configurar-sonarqube-cloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Configurar SonarQube Cloud
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Configurar SonarQube Cloud">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-organizacion-y-el-proyecto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la Organización y el Proyecto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desactivar-el-automatic-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Desactivar el Automatic Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generar-el-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generar el Token
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guardar-el-token-como-secreto-en-github" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guardar el Token como Secreto en GitHub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agregar-la-configuracion-al-pomxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agregar la Configuración al pom.xml
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-configurar-el-pipeline-de-github-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Configurar el Pipeline de GitHub Actions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Configurar el Pipeline de GitHub Actions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-el-archivo-de-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear el Archivo de Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publicar-y-verificar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publicar y Verificar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ejercicio-practico-introducir-y-corregir-defectos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Ejercicio Práctico: Introducir y Corregir Defectos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Ejercicio Práctico: Introducir y Corregir Defectos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-la-rama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear la Rama
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agregar-la-clase-con-defectos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agregar la Clase con Defectos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dar-formato-y-publicar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dar Formato y Publicar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abrir-el-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abrir el Pull Request
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observar-los-hallazgos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observar los Hallazgos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#corregir-los-defectos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Corregir los Defectos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agregar-pruebas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agregar Pruebas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificar-que-el-quality-gate-pase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificar que el Quality Gate Pase
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-interpretar-los-resultados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Interpretar los Resultados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Interpretar los Resultados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-mirar-en-el-tablero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué Mirar en el Tablero
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codigo-nuevo-y-codigo-total" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Código Nuevo y Código Total
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#que-es-el-quality-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué es el Quality Gate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-cierre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Cierre
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Cierre">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preguntas-de-reflexion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preguntas de Reflexión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#problemas-frecuentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problemas Frecuentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reto-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reto Opcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="analisis-estatico-de-codigo-en-java-con-sonarqube-cloud">Análisis Estático de Código en Java con SonarQube Cloud</h1>
+<p><strong>Duración estimada:</strong> 2 horas.</p>
+<p><strong>Prerrequisitos:</strong></p>
+<ul>
+<li>Cuenta de GitHub con acceso a Codespaces.</li>
+<li>Manejo básico de Git: ramas, commits, push y pull requests.</li>
+<li>Nociones de Java y Maven (no se requiere experiencia con Sonar ni con GitHub Actions).</li>
+<li>Navegador con sesión iniciada en GitHub.</li>
+</ul>
+<p><strong>Qué vas a construir:</strong> un pipeline que compila <a href="https://github.com/spring-projects/spring-petclinic">Spring PetClinic</a>, ejecuta sus pruebas y envía el análisis a SonarQube Cloud (antes SonarCloud) en cada push y pull request hacia <code>main</code>.</p>
+<blockquote>
+<p><strong>Versiones de Java.</strong> PetClinic exige Java 17 o superior (<code>&lt;java.version&gt;17&lt;/java.version&gt;</code> en su <code>pom.xml</code>). El escáner de SonarQube Cloud necesita Java 21 o superior. Por eso todo el laboratorio usa JDK 21: compila el proyecto y ejecuta el análisis.</p>
+</blockquote>
+<hr />
+<h2 id="1-preparar-el-repositorio"><strong>1. Preparar el Repositorio</strong></h2>
+<h3 id="hacer-el-fork">Hacer el Fork</h3>
+<ol>
+<li>Abre <a href="https://github.com/spring-projects/spring-petclinic">https://github.com/spring-projects/spring-petclinic</a> y haz clic en <strong>Fork</strong>.</li>
+<li>Deja marcada la opción <strong>Copy the <code>main</code> branch only</strong> y crea el fork en tu cuenta.</li>
+<li>En tu fork, ve a la pestaña <strong>Actions</strong> y haz clic en <strong>I understand my workflows, go ahead and enable them</strong>. GitHub desactiva los workflows en los forks hasta que lo autorizas.</li>
+</ol>
+<h3 id="configurar-codespaces">Configurar Codespaces</h3>
+<p>El repositorio ya trae un <code>.devcontainer/devcontainer.json</code>. Reemplaza su contenido desde el editor web de GitHub por el siguiente y haz commit en <code>main</code>:</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;Java with SonarQube Cloud&quot;,
+    &quot;image&quot;: &quot;mcr.microsoft.com/devcontainers/base:ubuntu&quot;,
+    &quot;features&quot;: {
+        &quot;ghcr.io/devcontainers/features/java:1&quot;: {
+            &quot;version&quot;: &quot;21&quot;
+        },
+        &quot;ghcr.io/devcontainers/features/docker-in-docker:2&quot;: {},
+        &quot;ghcr.io/devcontainers/features/github-cli:1&quot;: {}
+    },
+    &quot;customizations&quot;: {
+        &quot;vscode&quot;: {
+            &quot;extensions&quot;: [
+                &quot;vscjava.vscode-java-pack&quot;,
+                &quot;redhat.vscode-xml&quot;,
+                &quot;SonarSource.sonarlint-vscode&quot;
+            ]
+        }
+    },
+    &quot;remoteUser&quot;: &quot;vscode&quot;
+}
+</code></pre>
+<ul>
+<li><code>SonarSource.sonarlint-vscode</code> es la extensión <strong>SonarQube for IDE</strong> (antes SonarLint); conserva el identificador antiguo.</li>
+<li><code>docker-in-docker</code> es necesario porque algunas pruebas de PetClinic levantan bases de datos en contenedores.</li>
+</ul>
+<h3 id="abrir-el-codespace">Abrir el Codespace</h3>
+<ol>
+<li>En tu fork: <strong>Code &gt; Codespaces &gt; Create codespace on main</strong>.</li>
+<li>Cuando termine de cargar, verifica el entorno en la terminal:</li>
+</ol>
+<pre><code class="language-bash">java -version
+./mvnw -B verify
+</code></pre>
+<p>La primera compilación tarda varios minutos porque descarga las dependencias. Debe terminar en <code>BUILD SUCCESS</code>.</p>
+<h3 id="revisar-gitignore">Revisar <code>.gitignore</code></h3>
+<p>El repositorio ya ignora <code>target/</code> y los archivos de los IDE. No necesitas modificarlo.</p>
+<hr />
+<h2 id="2-configurar-sonarqube-cloud"><strong>2. Configurar SonarQube Cloud</strong></h2>
+<h3 id="crear-la-organizacion-y-el-proyecto">Crear la Organización y el Proyecto</h3>
+<ol>
+<li>Entra a <a href="https://sonarcloud.io">https://sonarcloud.io</a> e inicia sesión con <strong>GitHub</strong>.</li>
+<li>Haz clic en <strong>+ &gt; Analyze new project</strong> e importa tu cuenta de GitHub como organización. Autoriza la aplicación de SonarQube Cloud sobre tu fork.</li>
+<li>Elige el plan <strong>Free</strong> (suficiente para repositorios públicos).</li>
+<li>Selecciona el repositorio <code>spring-petclinic</code> y haz clic en <strong>Set Up</strong>.</li>
+<li>Cuando pregunte por la definición de código nuevo (<em>New Code</em>), elige <strong>Previous version</strong>.</li>
+<li>Anota la <strong>organization key</strong> y la <strong>project key</strong>: aparecen en <strong>Information</strong>, en el menú lateral del proyecto.</li>
+</ol>
+<h3 id="desactivar-el-automatic-analysis">Desactivar el Automatic Analysis</h3>
+<ol>
+<li>En el proyecto, ve a <strong>Administration &gt; Analysis Method</strong>.</li>
+<li>Apaga el interruptor <strong>Automatic Analysis</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>¿Por qué?</strong> SonarQube Cloud puede analizar el repositorio por su cuenta, sin compilar. Aquí el análisis lo lanza el pipeline, que sí compila y aporta cobertura. Los dos métodos no pueden convivir: si dejas el automático encendido, el escáner falla en el pipeline.</p>
+</blockquote>
+<h3 id="generar-el-token">Generar el Token</h3>
+<ol>
+<li>Ve a <strong>My Account &gt; Security</strong> (<a href="https://sonarcloud.io/account/security">https://sonarcloud.io/account/security</a>).</li>
+<li>Escribe un nombre, por ejemplo <code>petclinic-github-actions</code>, y haz clic en <strong>Generate Token</strong>.</li>
+<li>Copia el valor: no se vuelve a mostrar.</li>
+</ol>
+<h3 id="guardar-el-token-como-secreto-en-github">Guardar el Token como Secreto en GitHub</h3>
+<ol>
+<li>En tu fork: <strong>Settings &gt; Secrets and variables &gt; Actions &gt; New repository secret</strong>.</li>
+<li>Nombre: <code>SONAR_TOKEN</code>. Valor: el token copiado.</li>
+</ol>
+<blockquote>
+<p><strong>El token nunca va en un archivo del repositorio.</strong> Ni en <code>pom.xml</code>, ni en <code>sonar-project.properties</code>, ni en el workflow. Un token en el historial de Git queda expuesto para siempre, aunque borres el archivo después, y en un repositorio público cualquiera puede usarlo para publicar análisis en tu nombre. Como secreto, GitHub lo cifra y lo oculta en los logs.</p>
+</blockquote>
+<h3 id="agregar-la-configuracion-al-pomxml">Agregar la Configuración al <code>pom.xml</code></h3>
+<p>Dentro del bloque <code>&lt;properties&gt;</code> del <code>pom.xml</code>, agrega estas tres líneas:</p>
+<pre><code class="language-xml">&lt;properties&gt;
+    &lt;!-- ... propiedades existentes ... --&gt;
+
+    &lt;!-- SonarQube Cloud --&gt;
+    &lt;sonar.organization&gt;TU_ORGANIZACION_SONAR&lt;/sonar.organization&gt;
+    &lt;sonar.projectKey&gt;TU_PROJECT_KEY&lt;/sonar.projectKey&gt;
+    &lt;sonar.host.url&gt;https://sonarcloud.io&lt;/sonar.host.url&gt;
+&lt;/properties&gt;
+</code></pre>
+<p>Estos valores son identificadores públicos, no credenciales: pueden vivir en el repositorio.</p>
+<p><strong>Valores a reemplazar en esta sección:</strong></p>
+<ul>
+<li><code>TU_ORGANIZACION_SONAR</code>: la organization key (normalmente, tu usuario de GitHub en minúsculas).</li>
+<li><code>TU_PROJECT_KEY</code>: la project key (normalmente, <code>usuario_spring-petclinic</code>).</li>
+</ul>
+<hr />
+<h2 id="3-configurar-el-pipeline-de-github-actions"><strong>3. Configurar el Pipeline de GitHub Actions</strong></h2>
+<h3 id="crear-el-archivo-de-workflow">Crear el Archivo de Workflow</h3>
+<p>Guarda el siguiente contenido en <code>.github/workflows/sonarqube-analysis.yml</code>:</p>
+<pre><code class="language-yaml">name: SonarQube Cloud Analysis
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Cache SonarQube packages
+        uses: actions/cache@v6
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Build, test and analyze
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:5.8.0.7211:sonar
+</code></pre>
+<p>Qué hace cada parte:</p>
+<ul>
+<li><strong><code>fetch-depth: 0</code></strong> descarga todo el historial. Sonar lo necesita para saber qué líneas son nuevas y quién las escribió.</li>
+<li><strong><code>cache: maven</code></strong> guarda <code>~/.m2</code> entre ejecuciones para no descargar las dependencias cada vez.</li>
+<li><strong><code>verify</code></strong> compila, ejecuta las pruebas y genera el reporte de cobertura de JaCoCo, que PetClinic ya trae configurado.</li>
+<li><strong><code>sonar-maven-plugin:sonar</code></strong> es el SonarScanner for Maven. Lee la configuración del <code>pom.xml</code> y el token de la variable <code>SONAR_TOKEN</code>. No hay que descargar ningún escáner a mano.</li>
+</ul>
+<h3 id="publicar-y-verificar">Publicar y Verificar</h3>
+<pre><code class="language-bash">git add pom.xml .github/workflows/sonarqube-analysis.yml
+git commit -m &quot;ci: add SonarQube Cloud analysis&quot;
+git push origin main
+</code></pre>
+<ol>
+<li>Abre la pestaña <strong>Actions</strong> de tu fork y espera a que <strong>SonarQube Cloud Analysis</strong> termine en verde.</li>
+<li>Abre el proyecto en SonarQube Cloud: debe aparecer el primer análisis de <code>main</code>.</li>
+</ol>
+<blockquote>
+<p>El fork trae otros workflows (<code>maven-build.yml</code>, <code>gradle-build.yml</code>, <code>deploy-and-test-cluster.yml</code>). Puedes ignorarlos o desactivarlos en <strong>Actions &gt; (workflow) &gt; ⋯ &gt; Disable workflow</strong>.</p>
+</blockquote>
+<hr />
+<h2 id="4-ejercicio-practico-introducir-y-corregir-defectos"><strong>4. Ejercicio Práctico: Introducir y Corregir Defectos</strong></h2>
+<p>PetClinic es código limpio, así que vas a ensuciarlo a propósito.</p>
+<h3 id="crear-la-rama">Crear la Rama</h3>
+<pre><code class="language-bash">git checkout -b lab/defectos
+mkdir -p src/main/java/org/springframework/samples/petclinic/lab
+</code></pre>
+<h3 id="agregar-la-clase-con-defectos">Agregar la Clase con Defectos</h3>
+<p>Crea <code>src/main/java/org/springframework/samples/petclinic/lab/OwnerReport.java</code>:</p>
+<pre><code class="language-java">package org.springframework.samples.petclinic.lab;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class OwnerReport {
+
+    // Defecto 1: credencial en el código
+    private static final String PASSWORD = &quot;Petclinic2024!&quot;;
+
+    private final Map&lt;String, String&gt; phones = new HashMap&lt;&gt;();
+
+    public void addPhone(String owner, String phone) {
+        phones.put(owner, phone);
+    }
+
+    public boolean isAdmin(String user, String secret) {
+        return &quot;admin&quot;.equals(user) &amp;&amp; PASSWORD.equals(secret);
+    }
+
+    // Defecto 2: recurso sin cerrar
+    public String readFirstLine(String path) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(path));
+        return reader.readLine();
+    }
+
+    // Defecto 3: posible NullPointerException
+    public int phoneLength(String owner) {
+        String phone = null;
+        if (phones.containsKey(owner)) {
+            phone = phones.get(owner);
+        }
+        return phone.length();
+    }
+
+    // Defecto 4: excepción silenciada
+    public int parseAge(String value) {
+        int age = 0;
+        try {
+            age = Integer.parseInt(value);
+        }
+        catch (NumberFormatException ex) {
+        }
+        return age;
+    }
+
+    // Defecto 5: código duplicado (formatOwner y formatVet son idénticos)
+    public String formatOwner(String firstName, String lastName, String city) {
+        StringBuilder line = new StringBuilder();
+        line.append(lastName.toUpperCase());
+        line.append(&quot;, &quot;);
+        line.append(firstName);
+        line.append(&quot; (&quot;);
+        line.append(city);
+        line.append(&quot;)&quot;);
+        return line.toString();
+    }
+
+    public String formatVet(String firstName, String lastName, String city) {
+        StringBuilder line = new StringBuilder();
+        line.append(lastName.toUpperCase());
+        line.append(&quot;, &quot;);
+        line.append(firstName);
+        line.append(&quot; (&quot;);
+        line.append(city);
+        line.append(&quot;)&quot;);
+        return line.toString();
+    }
+
+}
+</code></pre>
+<p>Regla que debería activar cada defecto:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Defecto</th>
+<th>Regla esperada</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Credencial en el código</td>
+<td><code>java:S2068</code> — las contraseñas escritas en el código son sensibles</td>
+<td>Security Hotspot</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Recurso sin cerrar</td>
+<td><code>java:S2095</code> — los recursos deben cerrarse</td>
+<td>Bug</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Posible NullPointerException</td>
+<td><code>java:S2259</code> — no se debe desreferenciar un valor nulo</td>
+<td>Bug</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Excepción silenciada</td>
+<td><code>java:S108</code> — los bloques de código no deben quedar vacíos</td>
+<td>Code Smell</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Código duplicado</td>
+<td><code>java:S4144</code> — los métodos no deben tener implementaciones idénticas</td>
+<td>Code Smell</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Verificar:</strong> las reglas dependen del perfil de calidad activo (<em>Sonar way</em>) y pueden cambiar entre versiones. Compara esta tabla con lo que reporte tu análisis; es normal que aparezcan hallazgos adicionales.</p>
+</blockquote>
+<h3 id="dar-formato-y-publicar">Dar Formato y Publicar</h3>
+<p>PetClinic valida el formato del código en cada compilación. Aplícalo antes del commit:</p>
+<pre><code class="language-bash">./mvnw spring-javaformat:apply
+git add src/main/java/org/springframework/samples/petclinic/lab
+git commit -m &quot;feat: add owner report&quot;
+git push origin lab/defectos
+</code></pre>
+<h3 id="abrir-el-pull-request">Abrir el Pull Request</h3>
+<ol>
+<li>En tu fork, haz clic en <strong>Compare &amp; pull request</strong>.</li>
+<li><strong>Cambia el repositorio base.</strong> GitHub propone <code>spring-projects/spring-petclinic</code>; selecciona <code>TU_USUARIO_GITHUB/spring-petclinic</code> con base <code>main</code>.</li>
+<li>Crea el pull request.</li>
+</ol>
+<blockquote>
+<p>Un PR hacia el repositorio original no tiene acceso a tu secreto <code>SONAR_TOKEN</code> y molestaría a los mantenedores de PetClinic.</p>
+</blockquote>
+<h3 id="observar-los-hallazgos">Observar los Hallazgos</h3>
+<ol>
+<li>Espera a que el workflow termine. El paso de Maven pasa en verde: el código compila y las pruebas existentes pasan.</li>
+<li>Revisa el comentario que SonarQube Cloud deja en el pull request y el check <strong>SonarCloud Code Analysis</strong>: el Quality Gate debe aparecer como <strong>Failed</strong>.</li>
+<li>Abre el enlace al análisis y responde:<ul>
+<li>¿Qué defectos encontró y cuáles no?</li>
+<li>¿Qué condiciones del Quality Gate fallaron?</li>
+<li>¿Qué cobertura tiene el código nuevo?</li>
+</ul>
+</li>
+</ol>
+<h3 id="corregir-los-defectos">Corregir los Defectos</h3>
+<p>Reemplaza el contenido de <code>OwnerReport.java</code>:</p>
+<pre><code class="language-java">package org.springframework.samples.petclinic.lab;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+
+public class OwnerReport {
+
+    private final Map&lt;String, String&gt; phones = new HashMap&lt;&gt;();
+
+    private final String adminSecret;
+
+    // Corrección 1: el secreto llega desde fuera (variable de entorno, vault...)
+    public OwnerReport(String adminSecret) {
+        this.adminSecret = adminSecret;
+    }
+
+    public void addPhone(String owner, String phone) {
+        phones.put(owner, phone);
+    }
+
+    public boolean isAdmin(String user, String secret) {
+        return &quot;admin&quot;.equals(user) &amp;&amp; adminSecret != null &amp;&amp; adminSecret.equals(secret);
+    }
+
+    // Corrección 2: try-with-resources cierra el lector
+    public String readFirstLine(String path) throws IOException {
+        try (BufferedReader reader = Files.newBufferedReader(Path.of(path))) {
+            return reader.readLine();
+        }
+    }
+
+    // Corrección 3: se controla el caso sin teléfono
+    public int phoneLength(String owner) {
+        String phone = phones.get(owner);
+        return (phone != null) ? phone.length() : 0;
+    }
+
+    // Corrección 4: la excepción se propaga con contexto
+    public int parseAge(String value) {
+        try {
+            return Integer.parseInt(value);
+        }
+        catch (NumberFormatException ex) {
+            throw new IllegalArgumentException(&quot;Edad no válida: &quot; + value, ex);
+        }
+    }
+
+    // Corrección 5: una sola implementación reutilizada
+    public String formatOwner(String firstName, String lastName, String city) {
+        return formatPerson(firstName, lastName, city);
+    }
+
+    public String formatVet(String firstName, String lastName, String city) {
+        return formatPerson(firstName, lastName, city);
+    }
+
+    private String formatPerson(String firstName, String lastName, String city) {
+        return lastName.toUpperCase() + &quot;, &quot; + firstName + &quot; (&quot; + city + &quot;)&quot;;
+    }
+
+}
+</code></pre>
+<h3 id="agregar-pruebas">Agregar Pruebas</h3>
+<p>El Quality Gate también exige cobertura sobre el código nuevo, así que corregir los defectos no basta. Crea <code>src/test/java/org/springframework/samples/petclinic/lab/OwnerReportTests.java</code>:</p>
+<pre><code class="language-java">package org.springframework.samples.petclinic.lab;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+class OwnerReportTests {
+
+    private final OwnerReport report = new OwnerReport(&quot;s3cret&quot;);
+
+    @Test
+    void adminRequiresMatchingSecret() {
+        assertThat(report.isAdmin(&quot;admin&quot;, &quot;s3cret&quot;)).isTrue();
+        assertThat(report.isAdmin(&quot;admin&quot;, &quot;other&quot;)).isFalse();
+        assertThat(report.isAdmin(&quot;guest&quot;, &quot;s3cret&quot;)).isFalse();
+    }
+
+    @Test
+    void readsFirstLine(@TempDir Path dir) throws IOException {
+        Path file = Files.writeString(dir.resolve(&quot;owners.txt&quot;), &quot;first\nsecond\n&quot;);
+        assertThat(report.readFirstLine(file.toString())).isEqualTo(&quot;first&quot;);
+    }
+
+    @Test
+    void phoneLengthIsZeroWhenOwnerHasNoPhone() {
+        report.addPhone(&quot;george&quot;, &quot;6085551023&quot;);
+        assertThat(report.phoneLength(&quot;george&quot;)).isEqualTo(10);
+        assertThat(report.phoneLength(&quot;nobody&quot;)).isZero();
+    }
+
+    @Test
+    void parseAgeRejectsInvalidValues() {
+        assertThat(report.parseAge(&quot;42&quot;)).isEqualTo(42);
+        assertThatThrownBy(() -&gt; report.parseAge(&quot;abc&quot;)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void formatsOwnersAndVets() {
+        assertThat(report.formatOwner(&quot;George&quot;, &quot;Franklin&quot;, &quot;Madison&quot;)).isEqualTo(&quot;FRANKLIN, George (Madison)&quot;);
+        assertThat(report.formatVet(&quot;James&quot;, &quot;Carter&quot;, &quot;Sun Prairie&quot;)).isEqualTo(&quot;CARTER, James (Sun Prairie)&quot;);
+    }
+
+}
+</code></pre>
+<h3 id="verificar-que-el-quality-gate-pase">Verificar que el Quality Gate Pase</h3>
+<pre><code class="language-bash">./mvnw spring-javaformat:apply
+./mvnw -B verify
+git add src
+git commit -m &quot;fix: resolve SonarQube findings in owner report&quot;
+git push origin lab/defectos
+</code></pre>
+<ol>
+<li>El push actualiza el pull request y dispara el workflow de nuevo.</li>
+<li>Confirma que el Quality Gate cambia a <strong>Passed</strong> y que los hallazgos anteriores desaparecen.</li>
+<li>Haz merge del pull request y revisa el análisis de <code>main</code>.</li>
+</ol>
+<p><strong>Valores a reemplazar en esta sección:</strong></p>
+<ul>
+<li><code>TU_USUARIO_GITHUB</code>: tu usuario de GitHub, dueño del fork.</li>
+</ul>
+<hr />
+<h2 id="5-interpretar-los-resultados"><strong>5. Interpretar los Resultados</strong></h2>
+<h3 id="que-mirar-en-el-tablero">Qué Mirar en el Tablero</h3>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Qué significa</th>
+<th>Pregunta que responde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bugs</strong></td>
+<td>Código que está mal o fallará en ejecución</td>
+<td>¿Esto se va a romper?</td>
+</tr>
+<tr>
+<td><strong>Vulnerabilities</strong></td>
+<td>Código que un atacante puede explotar</td>
+<td>¿Esto es inseguro con certeza?</td>
+</tr>
+<tr>
+<td><strong>Security Hotspots</strong></td>
+<td>Código sensible que una persona debe revisar</td>
+<td>¿Esto podría ser inseguro?</td>
+</tr>
+<tr>
+<td><strong>Code Smells</strong></td>
+<td>Código que funciona pero es difícil de mantener</td>
+<td>¿Cuánto costará cambiar esto?</td>
+</tr>
+<tr>
+<td><strong>Duplications</strong></td>
+<td>Porcentaje de líneas repetidas</td>
+<td>¿Cuánto código sobra?</td>
+</tr>
+<tr>
+<td><strong>Coverage</strong></td>
+<td>Porcentaje de líneas ejecutadas por las pruebas</td>
+<td>¿Qué tan protegido está el código?</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Las versiones recientes del tablero agrupan los hallazgos por atributo: <strong>Reliability</strong> (bugs), <strong>Security</strong> (vulnerabilidades) y <strong>Maintainability</strong> (code smells). Son las mismas categorías con otro nombre.</li>
+<li>Cada categoría recibe una calificación de <strong>A</strong> a <strong>E</strong>.</li>
+<li>Un Security Hotspot no es un defecto confirmado: se cierra corrigiendo el código o marcándolo como revisado (<em>Safe</em>).</li>
+</ul>
+<h3 id="codigo-nuevo-y-codigo-total">Código Nuevo y Código Total</h3>
+<p>El tablero separa <strong>New Code</strong> de <strong>Overall Code</strong>. En un pull request, el código nuevo son las líneas que el PR cambia. La idea es no empeorar: se exige calidad a lo que entra, sin tener que arreglar primero todo lo heredado.</p>
+<h3 id="que-es-el-quality-gate">Qué es el Quality Gate</h3>
+<p>Es un conjunto de condiciones que el código debe cumplir para considerarse apto. Responde con <strong>Passed</strong> o <strong>Failed</strong> a una sola pregunta: ¿se puede integrar este cambio?</p>
+<p>El Quality Gate por defecto, <em>Sonar way</em>, evalúa el código nuevo: sin problemas nuevos de fiabilidad, seguridad o mantenibilidad, todos los hotspots revisados, cobertura mínima del 80 % y duplicación máxima del 3 %.</p>
+<blockquote>
+<p><strong>Verificar:</strong> consulta las condiciones exactas en <strong>Quality Gates</strong>, en el menú de tu organización; pueden variar con el tiempo.</p>
+</blockquote>
+<hr />
+<h2 id="6-cierre"><strong>6. Cierre</strong></h2>
+<h3 id="preguntas-de-reflexion">Preguntas de Reflexión</h3>
+<ol>
+<li>El workflow terminó en verde aunque el Quality Gate falló. ¿Qué habría que cambiar para que un Quality Gate fallido impida el merge? ¿Conviene hacerlo siempre?</li>
+<li>¿Por qué la credencial apareció como Security Hotspot y no como Vulnerability? ¿Qué implica esa diferencia para el equipo?</li>
+<li>¿Qué defectos reales no puede encontrar el análisis estático, por bien configurado que esté?</li>
+<li>¿Qué ventaja tiene evaluar solo el código nuevo frente a exigir que todo el proyecto cumpla el Quality Gate?</li>
+</ol>
+<h3 id="problemas-frecuentes">Problemas Frecuentes</h3>
+<table>
+<thead>
+<tr>
+<th>Síntoma</th>
+<th>Causa y solución</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>El workflow no se ejecuta</td>
+<td>Los workflows del fork están desactivados. Actívalos en la pestaña <strong>Actions</strong>.</td>
+</tr>
+<tr>
+<td><code>You are running CI analysis while Automatic Analysis is enabled</code></td>
+<td>Apaga <strong>Automatic Analysis</strong> en <strong>Administration &gt; Analysis Method</strong>.</td>
+</tr>
+<tr>
+<td><code>Not authorized</code> o <code>Project not found</code></td>
+<td>El secreto <code>SONAR_TOKEN</code> no existe o está mal copiado, o <code>sonar.organization</code> / <code>sonar.projectKey</code> no coinciden con los de SonarQube Cloud.</td>
+</tr>
+<tr>
+<td>La compilación falla en <code>spring-javaformat:validate</code></td>
+<td>El código no cumple el formato del proyecto. Ejecuta <code>./mvnw spring-javaformat:apply</code> y vuelve a hacer commit.</td>
+</tr>
+<tr>
+<td>La compilación falla en <code>checkstyle</code> con <code>NoHttp</code></td>
+<td>Algún archivo contiene una URL con <code>http://</code>. Usa <code>https://</code>.</td>
+</tr>
+<tr>
+<td>El escáner se queja de la versión de Java</td>
+<td>El workflow no usa JDK 21. Revisa el paso <strong>Set up JDK 21</strong>.</td>
+</tr>
+<tr>
+<td>El análisis del PR falla por falta de token</td>
+<td>El PR apunta a <code>spring-projects/spring-petclinic</code>. Ciérralo y ábrelo contra tu fork.</td>
+</tr>
+<tr>
+<td>El Quality Gate sigue en <strong>Failed</strong> tras corregir</td>
+<td>Revisa la cobertura del código nuevo y los hotspots sin revisar.</td>
+</tr>
+<tr>
+<td>El Quality Gate de <code>main</code> aparece como <strong>Not computed</strong></td>
+<td>Falta definir el código nuevo: <strong>Administration &gt; New Code</strong>. Se calcula en el siguiente análisis.</td>
+</tr>
+<tr>
+<td>Fallan pruebas en el Codespace por Docker</td>
+<td>Reconstruye el contenedor (<strong>Codespaces: Rebuild Container</strong>) para que cargue <code>docker-in-docker</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reto-opcional">Reto Opcional</h3>
+<ul>
+<li>Configura <strong>SonarQube for IDE</strong> en <em>Connected Mode</em> con tu proyecto de SonarQube Cloud y comprueba que los defectos de la sección 4 se marcan en el editor antes del commit.</li>
+<li>Protege la rama <code>main</code> para exigir el check de SonarQube Cloud antes del merge.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
