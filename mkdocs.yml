@@ -13,6 +13,7 @@ nav:
   - Event driven lab: event-driven-lab.md
   - SDD: sdd.md
   - Análisis estático (Java): static-code-java.md
+  - Análisis de dependencias (SCA): sca-dependency-check.md
 
 plugins:
   - search
